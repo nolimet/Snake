@@ -1,5 +1,6 @@
 package server 
 {
+	import dnsres
 	/**
 	 * ...
 	 * @author Jesse Stam
@@ -9,14 +10,9 @@ package server
 		
 		public function Connection() 
 		{
-			/*
-			 * Server connection here
-			 * 
-			 * recieve pos/movement
-			 * 
-			 * player colour?
-			 * 
-			 */
+			function StartConnection(ip:String, port:String):void {
+				
+			}
 		}
 		
 	}
