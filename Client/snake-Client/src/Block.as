@@ -13,8 +13,6 @@ package
 	 * ...
 	 * @author Tom Verkerk
 	 */
-	
-	 [SWF(width = "800", height = "800", frameRate = "30")]
 	 
 	public class Block extends Sprite
 	{
@@ -39,6 +37,30 @@ package
 				squares.push(square);
 				lastPos = new Vector3D(PosX + (11*i), PosY, length, 0);
 			}
+		}
+		
+		public function addBlock():void {
+			switch(moveDir) {
+				/*up*/case 1:
+					lastPos.y = lastPos.y -= 11;
+					break;
+				/*right*/case 2:
+					lastPos.x = lastPos.x += 11;
+					break;
+				/*down*/case 3:
+					lastPos.y = lastPos.y += 11;
+					break;
+				/*left*/case 4:
+					lastPos.x = lastPos.x -= 11;
+					break;
+			}
+			square = new Sprite();
+			square.graphics.beginFill(0x000000);
+			square.graphics.drawRect(lastPos.x,lastPos.y,10,10);
+			square.graphics.endFill();
+			addChild(square);
+			squares.push(square);
+			//lastPos = new Vector3D(PosX + (11*i), PosY, length, 0);
 		}
 		
 		public function moveSnake():void {

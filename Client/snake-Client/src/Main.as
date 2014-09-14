@@ -9,13 +9,20 @@ package
 	 * ...
 	 * @author Tom Verkerk
 	 */
+		
+	[SWF(width = "792", height = "792", frameRate = "30")]
+	 
 	public class Main extends Sprite 
 	{
 		private var Player:Block = new Block();
 		private var Player2:Block = new Block();
 		
+		private var pickUp:PickUp;
+		
 		private var timer:int;
-		private var moveTime:int = 10 ;
+		private var moveTime:int = 5;
+		private var randomX:Number;
+		private var randomY:Number;
 		
 		private var player1press:Boolean = false;
 		private var player2press:Boolean = false;
@@ -40,6 +47,8 @@ package
 			Player2.DrawSnake(0,55,5);
 			addChild(Player2);
 			
+			addPickUp();
+			
 			stage.addEventListener(Event.ENTER_FRAME, Update);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, Control);
 		}
@@ -54,6 +63,16 @@ package
 				checkColl();
 				timer = 0;
 			}
+		}
+		
+		private function addPickUp():void {
+			pickUp = new PickUp;
+			addChild(pickUp);
+			randomX = Math.floor(Math.random() * 72);
+			randomX *= 11;
+			randomY = Math.floor(Math.random() * 72);
+			randomY *= 11;
+			pickUp.addPickUp(randomX, randomY);
 		}
 		
 		private function Control(e:KeyboardEvent):void {
@@ -100,6 +119,16 @@ package
 				if (Player.square.hitTestObject(Player2.squares[j])) {
 					trace("Player1hit");
 				}
+			}
+			if (Player.square.hitTestObject(pickUp)) {
+				removeChild(pickUp);
+				addPickUp();
+				Player.addBlock();
+			}
+			else if (Player2.square.hitTestObject(pickUp)) {
+				removeChild(pickUp);
+				addPickUp();
+				Player2.addBlock();
 			}
 		}
 	}
