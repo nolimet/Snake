@@ -8,6 +8,8 @@
 *.sln.docstates
 
 # Build results
+Server/TCP/[Dd]ebug/
+Server/TCP/[Rr]elease/
 Server/[Dd]ebug/
 Server/[Dd]ebugPublic/
 Server/[Rr]elease/
