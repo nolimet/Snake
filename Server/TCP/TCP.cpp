@@ -5,11 +5,12 @@
 #include "stdafx.h"
 #include "Server.h"
 #include "Client.h"
+#include "Enums.h"
 
 char str[512];
 Connector* con;
 
-enum class KeyCode { Enter = 13, S = 115, C = 99 };
+
 
 void WaitForEnter(void) { 
 	printf("Press Enter to continue: "); 

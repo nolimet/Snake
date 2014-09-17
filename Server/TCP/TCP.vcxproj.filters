@@ -16,6 +16,9 @@
     <Filter Include="RakNet">
       <UniqueIdentifier>{6f2c3567-3960-4679-8a01-18bedb4c92d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{5b17cc08-761c-4793-a0a6-93d8ca2ff078}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -500,6 +503,12 @@
     </ClInclude>
     <ClInclude Include="..\..\RakNet\Source\XBox360Includes.h">
       <Filter>RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ByteConvert.h">
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
