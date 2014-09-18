@@ -32,17 +32,17 @@
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>C:\Users\SONY\Documents\projects\as3\TCPClientAir\src</path-element>
+      <path-element>C:\Users\SONY\Documents\projects\netwerk\Snake\TCPClientAirTest\src</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>C:\Users\SONY\Documents\projects\as3\TCPClientAir\swc\feathers.swc</path-element>
-      <path-element>C:\Users\SONY\Documents\projects\as3\TCPClientAir\swc\starling.swc</path-element>
-      <path-element>C:\Users\SONY\Documents\projects\as3\TCPClientAir\swc\AeonDesktopTheme.swc</path-element>
+      <path-element>C:\Users\SONY\Documents\projects\netwerk\Snake\TCPClientAirTest\swc\feathers.swc</path-element>
+      <path-element>C:\Users\SONY\Documents\projects\netwerk\Snake\TCPClientAirTest\swc\starling.swc</path-element>
+      <path-element>C:\Users\SONY\Documents\projects\netwerk\Snake\TCPClientAirTest\swc\AeonDesktopTheme.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Users\SONY\Documents\projects\as3\TCPClientAir\src\StartUp.as</path-element>
+    <path-element>C:\Users\SONY\Documents\projects\netwerk\Snake\TCPClientAirTest\src\StartUp.as</path-element>
   </file-specs>
   <default-background-color>#808080</default-background-color>
   <default-frame-rate>30</default-frame-rate>

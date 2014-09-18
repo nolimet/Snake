@@ -28,7 +28,7 @@ package
 		// create our client socket
 		protected var socket:Socket;
 		protected var button:Button;
-		private var pingTime:int;
+		private var pingTime:Number;
 		private var currentTime:Date = new Date();
 		
 		public function Main() {
@@ -97,8 +97,9 @@ package
 		   Debug.test(function():void {trace("Message Type: " + mesageType)} , Debug.Server_2);
 		   switch(mesageType) {
 			   case MessageType.PingBack:
-					var pingTime:int = pingTime-currentTime.milliseconds;
-					Debug.test(function():void {trace("Ping: " + pingTime)} , Debug.Server_2);
+				   currentTime = new Date();
+					var thisPingTime:Number = pingTime-currentTime.time;
+					Debug.test(function():void {trace("Ping: " + thisPingTime)} , Debug.Server_2);
 				   break;
 			   case MessageType.Hello:
 					Debug.test(function():void {trace("hello Message")} , Debug.Server_1);
@@ -116,10 +117,13 @@ package
 			messageData.writeInt(messageL);
 			var messageType:int = MessageType.Ping;
 			messageData.writeByte(messageType);
+			
 			socket.writeBytes(messageData);
 			socket.flush();
-			var currentTime:Date = new Date();
-			pingTime = currentTime.milliseconds;
+			currentTime = new Date();
+			pingTime = currentTime.time;
+			trace("pingTime------------------: "+pingTime);
+			
 		}
 	}
 
