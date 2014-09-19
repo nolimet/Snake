@@ -244,6 +244,7 @@
     <ClInclude Include="Connector.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="PolicyServer.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -362,6 +363,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Connector.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="PolicyServer.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TCP.cpp" />
@@ -370,6 +372,7 @@
     <None Include="..\..\RakNet\Source\RakNet.vcproj" />
     <None Include="..\..\RakNet\Source\RakNet_vc8.vcproj" />
     <None Include="..\..\RakNet\Source\RakNet_vc9.vcproj" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

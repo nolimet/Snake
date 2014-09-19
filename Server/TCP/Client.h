@@ -7,6 +7,6 @@ class Client :
 public:
 	Client(void);
 	~Client(void);
-	virtual void Init();
+	virtual void Init(int port);
 };
 

@@ -24,12 +24,13 @@ package
 	public class Main extends Sprite 
 	{
 		static public const port:int = 60000;
-		static public const address:String = "127.0.0.1";
+		static public const address:String = "84.80.98.251";
 		// create our client socket
 		protected var socket:Socket;
 		protected var button:Button;
 		private var pingTime:Number;
 		private var currentTime:Date = new Date();
+		private var debug:Debug = new Debug();
 		
 		public function Main() {
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, addedToStage);
@@ -37,13 +38,16 @@ package
 		
 		private function addedToStage():void {
 			this.removeEventListener(starling.events.Event.ADDED_TO_STAGE, addedToStage);
-			var textField:TextField = new TextField(400, 300, "Welcome to Starling!");
-			addChild(textField);
+			//var textField:TextField = new TextField(400, 300, "Welcome to Starling!");
+			//addChild(textField);
 			new AeonDesktopTheme();
 			this.button = new Button();
 			this.button.label = "Click Me";
+			debug.touchable = false;
+			this.addChild(debug);
 			this.addChild( button );
 			this.button.addEventListener( starling.events.Event.TRIGGERED, button_triggeredHandler );
+			
 			createSocket();
 		}
 		
@@ -53,7 +57,8 @@ package
 			Ping();
 		}
 
-		protected function createSocket():void{             
+		protected function createSocket():void {   
+			debug.print(("connectTo:"+address),Debug.Server_2);
 			// connect
 			socket = new Socket(address, port);
 			// get notified when the socket connects
@@ -68,41 +73,41 @@ package
 		}
 		
 		private function onClose(e:Event):void {
-			trace("[State]onClose");
+			debug.print("[State]onClose",Debug.Server_2);
 		}
 		private function onDeactivate(e:Event):void {
-			trace("[State]onDeactivate");
+			debug.print("[State]onDeactivate",Debug.Server_2);
 		}
 		private function onSecurityError(e:SecurityErrorEvent):void {
-			trace("[State]onSecurityError");
+			debug.print("[State]onSecurityError",Debug.Server_2);
 		}
 		private function onIOError(e:IOErrorEvent):void {
-			trace("[State]IOErrorEvent");
+			debug.print("[State]IOErrorEvent",Debug.Server_2);
 		}
 		
 		protected function onConnected(e:Event):void {
-			trace("client - socket connected");
+			debug.print("client - socket connected",Debug.Server_2);
 			
 			Ping();
 		}
 		
 		protected function onData(e:ProgressEvent):void{
-		   Debug.test(function():void {trace("-process packege-") } , Debug.Server_2);
+		   debug.print(("-process packege-") , Debug.Server_2);
 		   var bytes:ByteArray = new ByteArray;
 		   bytes.endian = Endian.LITTLE_ENDIAN;
 		   socket.readBytes(bytes);
 		   var messgaeLength:int = bytes.readInt();
-		   Debug.test(function():void {trace("Length Message: " + messgaeLength)} , Debug.Server_2);
+		   debug.print(("Length Message: " + messgaeLength) , Debug.Server_2);
 		   var mesageType:int = bytes.readByte();
-		   Debug.test(function():void {trace("Message Type: " + mesageType)} , Debug.Server_2);
+		   debug.print(("Message Type: " + mesageType) , Debug.Server_2);
 		   switch(mesageType) {
 			   case MessageType.PingBack:
 				   currentTime = new Date();
 					var thisPingTime:Number = pingTime-currentTime.time;
-					Debug.test(function():void {trace("Ping: " + thisPingTime)} , Debug.Server_2);
+					debug.print(("Ping: " + thisPingTime) , Debug.Server_2);
 				   break;
 			   case MessageType.Hello:
-					Debug.test(function():void {trace("hello Message")} , Debug.Server_1);
+					debug.print(("hello Message") , Debug.Server_1);
 				   break;
 		   }
 		   

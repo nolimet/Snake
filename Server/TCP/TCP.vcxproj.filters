@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -16,32 +8,23 @@
     <Filter Include="RakNet">
       <UniqueIdentifier>{6f2c3567-3960-4679-8a01-18bedb4c92d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\utils">
+    <Filter Include="net">
+      <UniqueIdentifier>{7507be3e-9fc0-4446-81fc-5a9285ff80da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
       <UniqueIdentifier>{5b17cc08-761c-4793-a0a6-93d8ca2ff078}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{ed3323ed-cfaf-4d75-8567-8ba87a1e5441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\base">
+      <UniqueIdentifier>{34ae8b5a-d03d-4a2b-8406-e893b0cd25d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rest">
+      <UniqueIdentifier>{e977a450-d6f6-478c-ba7e-40441a6f13a8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Server.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Connector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Client.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\RakNet\Source\_FindFirst.h">
       <Filter>RakNet</Filter>
     </ClInclude>
@@ -504,32 +487,35 @@
     <ClInclude Include="..\..\RakNet\Source\XBox360Includes.h">
       <Filter>RakNet</Filter>
     </ClInclude>
-    <ClInclude Include="Enums.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ByteConvert.h">
-      <Filter>Header Files\utils</Filter>
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="PolicyServer.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="Connector.h">
+      <Filter>net\base</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>rest</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>rest</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>rest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TCP.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Server.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Connector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\RakNet\Source\_FindFirst.cpp">
       <Filter>RakNet</Filter>
     </ClCompile>
@@ -860,6 +846,25 @@
     <ClCompile Include="..\..\RakNet\Source\WSAStartupSingleton.cpp">
       <Filter>RakNet</Filter>
     </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="PolicyServer.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="TCP.cpp" />
+    <ClCompile Include="Entity.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="Connector.cpp">
+      <Filter>net\base</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>rest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\RakNet\Source\RakNet.vcproj">
@@ -871,5 +876,13 @@
     <None Include="..\..\RakNet\Source\RakNet_vc9.vcproj">
       <Filter>RakNet</Filter>
     </None>
+    <None Include="ClassDiagram.cd">
+      <Filter>rest</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>rest</Filter>
+    </Text>
   </ItemGroup>
 </Project>

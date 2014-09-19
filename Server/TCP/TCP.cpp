@@ -4,13 +4,14 @@
 #include <conio.h>
 #include "stdafx.h"
 #include "Server.h"
+#include "PolicyServer.h"
 #include "Client.h"
 #include "Enums.h"
+#include "RakSleep.h"
 
 char str[512];
 Connector* con;
-
-
+Connector* policyServer;
 
 void WaitForEnter(void) { 
 	printf("Press Enter to continue: "); 
@@ -25,6 +26,14 @@ void WaitForEnter(void) {
 	}
 } 
 
+void Loop(){
+	while(1){
+		policyServer->Loop();
+		con->Loop();
+		RakSleep(20);
+	}
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	printf("(C)lient or (S)erver?\n");
@@ -34,9 +43,13 @@ int _tmain(int argc, _TCHAR* argv[])
 		con = new Client();
 	} else {
 		con = new Server();
+		policyServer = new PolicyServer();
+		policyServer->Init(843);
+		
 	}
-	con->Init();
-	con->Loop();
+	con->Init(60000);
+	
+	Loop();
 
 	return 0;
 }

@@ -1,38 +1,46 @@
 #include "Connector.h"
 #include <stdio.h>
-#include "RakSleep.h"
 #include "Enums.h"
 #include "ByteConvert.h"
 #include <vector>
+#include <iostream>
 
 Connector::Connector(void)
 {
+	serverPort = 0;
 }
 
 Connector::~Connector(void)
 {
 }
 
-void Connector::Init(){
+void Connector::Init(int port){
+	serverPort = port;
 	peer = TCPInterface::GetInstance();
 }
 void Connector::Loop(){
+	//recieve loop
 	while(1){
-		//recieve loop
-		while(1){
-			pack = peer->Receive();
-			if(pack!=0){
-				ProcessPack(pack);
-				peer->DeallocatePacket(pack);
-			}else{
-				break;
-			}
+		pack = peer->Receive();
+		if(pack!=0){
+			ProcessPack(pack);
+			peer->DeallocatePacket(pack);
+		}else{
+			break;
 		}
-		RakSleep(20);
-		//game loop
-		//send loop
-		//this->SendHello();
 	}
+	while(1){
+		SystemAddress addresPolicy = peer->HasNewIncomingConnection();
+		if(addresPolicy!=UNASSIGNED_SYSTEM_ADDRESS){
+			std::cout << "[server connected]: "<<addresPolicy.ToString() <<std::endl;
+		}else{
+			break;
+		}
+	}
+		
+	//game loop
+	//send loop
+	//this->SendHello();
 }
 
 void Connector::ProcessPack(RakNet::Packet *pack){
@@ -79,6 +87,7 @@ void Connector::PingBack(SystemAddress addres){
 	hello[4]=(int)(MessageType::PingBack);
 
 	peer->Send((const char *)hello, 5,addres,false);
+	//peer->remoteClients[0]->outgoingDataMutex
 }
 
 void Connector::SendHello(){

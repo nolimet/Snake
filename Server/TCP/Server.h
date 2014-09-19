@@ -5,6 +5,6 @@ class Server : public Connector
 public:
 	Server(void);
 	~Server(void);
-	virtual void Init();
+	virtual void Init(int port);
 };
 

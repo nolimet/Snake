@@ -10,9 +10,9 @@ Server::~Server(void)
 {
 }
 
-void Server::Init(){
-	Connector::Init();
-	printf("Server Started\n");
-	peer->Start(SERVER_PORT,2);
+void Server::Init(int port){
+	Connector::Init(port);
+	printf("Server Started Port: %d\n",port);
+	peer->Start(getServerPort(),2);
 	isServer = true;
 }

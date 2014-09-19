@@ -13,12 +13,12 @@ Client::~Client(void)
 {
 }
 
-void Client::Init(){
-	Connector::Init();
+void Client::Init(int port){
+	Connector::Init(port);
 	printf("Client Started\n");
-	peer->Start(SERVER_PORT,0);
+	peer->Start(getServerPort(),0);
 	isServer = false;
-	SystemAddress addres = peer->Connect("127.0.0.1",SERVER_PORT);
+	SystemAddress addres = peer->Connect("127.0.0.1",getServerPort());
 	
 	char hello[9];
 	hello[0]=2;
