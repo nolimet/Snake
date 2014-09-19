@@ -18,7 +18,7 @@ package
 	{
 		public var square:Sprite;
 		public var squares:Array = new Array();
-		private var lastPos:Vector3D;
+		public var lastPos:Vector3D;
 		
 		public var moveDir:int = 2;
 		//1 = up
@@ -60,7 +60,6 @@ package
 			square.graphics.endFill();
 			addChild(square);
 			squares.push(square);
-			//lastPos = new Vector3D(PosX + (11*i), PosY, length, 0);
 		}
 		
 		public function moveSnake():void {
@@ -86,14 +85,6 @@ package
 			square.graphics.endFill();
 			addChild(square);
 			squares.push(square);
-			checkPos();
-		}
-		
-		private function checkPos():void {
-			if (lastPos.x < 0 || lastPos.x > 800 ||
-			    lastPos.y < 0 || lastPos.y > 800) {
-				trace("u dead");
-			}
 		}
 	}
 }

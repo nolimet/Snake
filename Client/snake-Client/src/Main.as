@@ -2,20 +2,22 @@ package
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.display.Stage;
 	import flash.display.Graphics;
 	import flash.events.KeyboardEvent;
+	import flash.display.StageScaleMode;
 	
 	/**
 	 * ...
 	 * @author Tom Verkerk
 	 */
 		
-	[SWF(width = "792", height = "792", frameRate = "30")]
+	[SWF(backgroundcolor = 0x000000, width = "792", height = "792", frameRate = "30")]
 	 
 	public class Main extends Sprite 
 	{
-		private var Player:Block = new Block();
-		private var Player2:Block = new Block();
+		private var Player:Block;
+		private var Player2:Block;
 		
 		private var pickUp:PickUp;
 		
@@ -23,6 +25,9 @@ package
 		private var moveTime:int = 5;
 		private var randomX:Number;
 		private var randomY:Number;
+		private var reset:Boolean = false;
+		private var switchone:Boolean = true;
+		private var index:int = 0;
 		
 		private var player1press:Boolean = false;
 		private var player2press:Boolean = false;
@@ -37,14 +42,17 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
+			stage.scaleMode = StageScaleMode.EXACT_FIT;
 			startGame();
 		}
 		
-		private function startGame():void{
-			Player.DrawSnake(0, 0, 8);
+		private function startGame():void {
+			Player = new Block();
+			Player.DrawSnake(11, 11, 8);
 			addChild(Player);
 			
-			Player2.DrawSnake(0,55,5);
+			Player2 = new Block();
+			Player2.DrawSnake(11,55,5);
 			addChild(Player2);
 			
 			addPickUp();
@@ -55,14 +63,23 @@ package
 		
 		private function Update(e:Event):void {
 			timer += 1;
-			if (timer >= moveTime) {
-				Player.moveSnake();
-				Player2.moveSnake();
-				player1press = false;
-				player2press = false;
-				checkColl();
-				timer = 0;
+			if (timer >= moveTime){
+				if (reset == false) {
+					Player.moveSnake();
+					Player2.moveSnake();
+					player1press = false;
+					player2press = false;
+					checkColl();
+					timer = 0;
+				}
 			}
+		}
+		
+		public function Resett():void {
+			removeChild(Player);
+			removeChild(Player2);
+			removeChild(pickUp);
+			startGame();
 		}
 		
 		private function addPickUp():void {
@@ -72,7 +89,15 @@ package
 			randomX *= 11;
 			randomY = Math.floor(Math.random() * 72);
 			randomY *= 11;
-			pickUp.addPickUp(randomX, randomY);
+			if (randomX == 0 && randomY == 0 ||
+				randomX == 792 && randomY == 0 ||
+				randomX == 0 && randomY == 792 ||
+				randomX == 792 && randomY == 792) {
+				addPickUp();
+			}
+			else {
+				pickUp.addPickUp(randomX, randomY);
+			}
 		}
 		
 		private function Control(e:KeyboardEvent):void {
@@ -110,16 +135,6 @@ package
 		}
 		
 		private function checkColl():void {
-			for (var i:int = 0; i < Player.squares.length; i++) {
-				if (Player2.square.hitTestObject(Player.squares[i])) {
-					trace("Player2hit");
-				}
-			}
-			for (var j:int = 0; j < Player2.squares.length; j++) {
-				if (Player.square.hitTestObject(Player2.squares[j])) {
-					trace("Player1hit");
-				}
-			}
 			if (Player.square.hitTestObject(pickUp)) {
 				removeChild(pickUp);
 				addPickUp();
@@ -129,6 +144,34 @@ package
 				removeChild(pickUp);
 				addPickUp();
 				Player2.addBlock();
+			}
+			for (var i:int = 0; i < Player.squares.length; i++) {
+				if (Player2.square.hitTestObject(Player.squares[i])) {
+					trace("Player2hit");
+					Resett();
+				}
+				if (Player.square.hitTestObject(Player.squares[i]) && i < Player.squares.length - 2) {
+					trace("Player1hitself");
+					Resett();
+				}
+			}
+			for (var j:int = 0; j < Player2.squares.length; j++) {
+				if (Player.square.hitTestObject(Player2.squares[j])) {
+					trace("Player1hit");
+					Resett();
+				}
+				if (Player2.square.hitTestObject(Player2.squares[j]) && j < Player2.squares.length - 2) {
+					trace("Player2hitself");
+					Resett();
+				}
+			}
+			if (Player.lastPos.x < 0 || Player.lastPos.x >= 792 ||
+			    Player.lastPos.y < 0 || Player.lastPos.y > 792) {
+				Resett();
+			}
+			if (Player2.lastPos.x < 0 || Player2.lastPos.x >= 792 ||
+			    Player2.lastPos.y < 0 || Player2.lastPos.y > 792) {
+				Resett();
 			}
 		}
 	}
