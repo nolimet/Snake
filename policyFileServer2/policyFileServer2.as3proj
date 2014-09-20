@@ -4,14 +4,14 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin\TCPClientAir.swf" />
+    <movie path="bin\policyFileServer2.swf" />
     <movie fps="30" />
-    <movie width="300" />
+    <movie width="200" />
     <movie height="600" />
     <movie version="14" />
     <movie minorVersion="0" />
     <movie platform="AIR" />
-    <movie background="#808080" />
+    <movie background="#000000" />
     <movie preferredSDK="L:\Development\AIRSDK_Compiler" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
@@ -53,10 +53,7 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="swc\feathers.swc" />
-    <element path="swc\starling.swc" />
-    <element path="src\themes\MetalWorksMobileTheme\swc\MetalWorksMobileTheme.swc" />
-    <element path="swc\AeonDesktopTheme.swc" />
+    <!-- example: <element path="..." /> -->
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -76,7 +73,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="src\StartUp.as" />
+    <compile path="src\Main.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>

@@ -15,6 +15,7 @@ package
 	import flash.utils.Endian;
 	import types.MessageType;
 	import utils.debug.Debug;
+	//import flash.system.System.sec
 	//import aeon
 	/**
 	 * ...
@@ -23,7 +24,8 @@ package
 	
 	public class Main extends Sprite 
 	{
-		static public const port:int = 60000;
+		static public const port:int = 11100;
+		//static public const address:String = "192.168.0.101";
 		static public const address:String = "84.80.98.251";
 		// create our client socket
 		protected var socket:Socket;

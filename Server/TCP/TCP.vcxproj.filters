@@ -865,6 +865,9 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>rest</Filter>
     </ClCompile>
+    <ClCompile Include="ByteConvert.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\RakNet\Source\RakNet.vcproj">

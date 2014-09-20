@@ -26,5 +26,8 @@ public:
 	int getServerPort(){
 		return serverPort;
 	}
+	bool getIsServer(){
+		return isServer;
+	}
 };
 

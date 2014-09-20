@@ -4,6 +4,8 @@
 #include "ByteConvert.h"
 #include <vector>
 #include <iostream>
+#include <stdio.h>
+
 
 Connector::Connector(void)
 {
@@ -30,9 +32,9 @@ void Connector::Loop(){
 		}
 	}
 	while(1){
-		SystemAddress addresPolicy = peer->HasNewIncomingConnection();
-		if(addresPolicy!=UNASSIGNED_SYSTEM_ADDRESS){
-			std::cout << "[server connected]: "<<addresPolicy.ToString() <<std::endl;
+		SystemAddress addresClient = peer->HasNewIncomingConnection();
+		if(addresClient!=UNASSIGNED_SYSTEM_ADDRESS){
+			std::cout << "[server connected]: "<<addresClient.ToString() <<std::endl;
 		}else{
 			break;
 		}
@@ -48,11 +50,9 @@ void Connector::ProcessPack(RakNet::Packet *pack){
 	//printf("data Lenght: %u\n",pack->length);
 	unsigned int dataLength = pack->length;
 	//printf("dataType: %i \n",pack->data[0]);
-	printf("data: ");
+
 	unsigned char* data = pack->data;
-	//for(int i = 0;i<dataLength;i++){
-	//	printf("%c",pack->data[i]);
-	//}
+	
 	int lenghtMessage = data[0] +(data[1]<<010)+(data[2]<<020)+(data[3]<<030);
 	unsigned char byteMessageLength[4];
 	byteMessageLength[0] = data[0];

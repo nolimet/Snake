@@ -8,10 +8,14 @@
 #include "Client.h"
 #include "Enums.h"
 #include "RakSleep.h"
+#include "iostream"
 
 char str[512];
 Connector* con;
 Connector* policyServer;
+
+const int SERVER_PORT = 11100;
+const int POLICY_SERVER_PORT = 843;
 
 void WaitForEnter(void) { 
 	printf("Press Enter to continue: "); 
@@ -28,7 +32,9 @@ void WaitForEnter(void) {
 
 void Loop(){
 	while(1){
-		policyServer->Loop();
+		if(con->getIsServer()){
+			//policyServer->Loop();
+		}
 		con->Loop();
 		RakSleep(20);
 	}
@@ -36,6 +42,17 @@ void Loop(){
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	/*unsigned char cha[] = { '<','p','o','l','i','c','y','\0' };
+	std::cout<<cha<<std::endl;
+	unsigned char cha2[8];
+	for (int i = 0;i<8;i++){
+		int c = cha[8-i];
+		printf("c:%u\n",c);
+		cha2[i] = cha[8-i];
+		printf("e:%u\n",cha2[i]);
+	}
+	std::cout<<cha2[3]<<std::endl;
+	*/
 	printf("(C)lient or (S)erver?\n");
 	
 	gets(str);
@@ -43,11 +60,11 @@ int _tmain(int argc, _TCHAR* argv[])
 		con = new Client();
 	} else {
 		con = new Server();
-		policyServer = new PolicyServer();
-		policyServer->Init(843);
+		//policyServer = new PolicyServer();
+		//policyServer->Init(POLICY_SERVER_PORT);
 		
 	}
-	con->Init(60000);
+	con->Init(SERVER_PORT);
 	
 	Loop();
 
