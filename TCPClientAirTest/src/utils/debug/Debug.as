@@ -2,6 +2,7 @@ package utils.debug
 {
 	import starling.display.Sprite;
 	import starling.text.TextField;
+	import starling.utils.HAlign;
 	/**
 	 * ...
 	 * @author Kit van de Bunt
@@ -21,7 +22,7 @@ package utils.debug
 		public static const Server_2:String = "Server_2";
 		private static const OFF:String = "off";
 		//private static var USER:Vector.<String> = new <String>[Kit,ALL,Kit_Draw_Objects,Kit_bounce];
-		private static var USER:Vector.<String> = new <String>[Server_2]; //enter all user u want to print for
+		private static var USER:Vector.<String> = new <String>[Server_2]; 
 		
 		private var textFields:Vector.<TextField> = new Vector.<TextField>();
 		
@@ -42,18 +43,19 @@ package utils.debug
 		}
 		
 		public function addText(text:String):void {
-			//smove text
-			for (var i:int = 0; i < textFields.length; i++) 
+			//move text
+			for (var i:int = textFields.length-1; i > -1; i--) 
 			{
 				textFields[i].y -= 20;
+				if (textFields[i].y < 20) {
+					removeChild(textFields[i]);
+					textFields.splice(i, 1);
+				}
 			}
-			
 			//spawn new
-			trace("-----------------"+stage.stageHeight);
-			textFields[textFields.length] = new TextField(400, stage.stageHeight+200, text);
-			//textFields[textFields.length - 1]);
-			//textFields[textFields.length - 1].text = text;
-			//textFields[textFields.length - 1].y = 600-20;
+			textFields[textFields.length] = new TextField(stage.stageWidth, 20, text);
+			textFields[textFields.length - 1].hAlign = HAlign.LEFT;
+			textFields[textFields.length - 1].y = stage.stageHeight - 20;
 			addChild(textFields[textFields.length-1]);
 		}
 		

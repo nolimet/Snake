@@ -6,8 +6,8 @@ package types
 	 */
 	public class MessageType 
 	{
-		public static var Ping:int = 20 as int;
-		public static var PingBack:int = 21 as int;
-		public static var Hello:int = 22 as int;
+		public static const PING:int = 20;
+		public static const PING_BACK:int = 21;
+		public static const HELLO:int = 22;
 	}
 }

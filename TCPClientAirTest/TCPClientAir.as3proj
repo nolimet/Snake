@@ -89,7 +89,7 @@
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
-    <option testMovie="Custom" />
+    <option testMovie="OpenDocument" />
     <option testMovieCommand="Run.bat" />
   </options>
   <!-- Plugin storage -->
