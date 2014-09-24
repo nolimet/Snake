@@ -9,6 +9,7 @@
 #include "Enums.h"
 #include "RakSleep.h"
 #include "iostream"
+#include "ByteConvert.h"
 
 char str[512];
 Connector* con;
@@ -16,6 +17,7 @@ Connector* policyServer;
 
 const int SERVER_PORT = 11100;
 const int POLICY_SERVER_PORT = 843;
+int maxPlayers = 4;
 
 void WaitForEnter(void) { 
 	printf("Press Enter to continue: "); 
@@ -53,18 +55,40 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	std::cout<<cha2[3]<<std::endl;
 	*/
+	/*
+	string name = "kit";
+	unsigned char *namC = ByteConverter::StringToUnsignedChar(name);
+	std::cout<<name<<std::endl;
+	std::cout<<namC[0];
+	std::cout<<namC[1];
+	std::cout<<namC[2];
+	std::cout<<std::endl;
+	*/
+	/*
+	Player *pl = new Player("Kit",UNASSIGNED_SYSTEM_ADDRESS);
+	string name = pl->getName();
+	std::cout << "hi:"<<name<<std::endl;
+	delete pl;
+	*/
+	
+
+	ConSettings conSettings;
 	printf("(C)lient or (S)erver?\n");
 	
 	gets(str);
 	if ((str[0]=='c')||(str[0]=='C')){
 		con = new Client();
+		conSettings.port = SERVER_PORT;
+		conSettings.maxPlayers = 0;
 	} else {
 		con = new Server();
+		conSettings.port = SERVER_PORT;
+		conSettings.maxPlayers = maxPlayers;
 		//policyServer = new PolicyServer();
 		//policyServer->Init(POLICY_SERVER_PORT);
 		
 	}
-	con->Init(SERVER_PORT);
+	con->Init(conSettings);
 	
 	Loop();
 

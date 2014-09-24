@@ -67,9 +67,9 @@ void PolicyServer::ProcessPack(RakNet::Packet *pack){
 		return;
 	}
 }
-void PolicyServer::Init(int port){
-	Connector::Init(port);
-	printf("Policy Server Started Port: %d\n",port);
+void PolicyServer::Init(ConSettings settings){
+	Connector::Init(settings);
+	printf("Policy Server Started Port: %d\n",settings.port);
 	peer->Start(getServerPort(),2);
 	//isServer = true;
 }

@@ -1,5 +1,6 @@
 #include "ByteConvert.h"
 
+
 namespace ByteConverter{
 
 	int UnsignedCharToInt(unsigned char* charArray){
@@ -21,5 +22,17 @@ namespace ByteConverter{
 			ss +=base[i];
 		}
 		return ss;
+	}
+
+	unsigned char* StringToUnsignedChar(std::string str){
+		/*
+		const char *conststr  = str.c_str();
+		unsigned char *conststr2  = (unsigned char*)conststr;
+		*/
+		char * cstr = new char [str.length()+1];
+		std::strcpy (cstr, str.c_str());
+		unsigned char *conststr2  = (unsigned char*)cstr;
+		//delete [] cstr;
+		return conststr2;
 	}
 }

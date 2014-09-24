@@ -6,7 +6,6 @@
 #include <iostream>
 #include <stdio.h>
 
-
 Connector::Connector(void)
 {
 	serverPort = 0;
@@ -16,8 +15,8 @@ Connector::~Connector(void)
 {
 }
 
-void Connector::Init(int port){
-	serverPort = port;
+void Connector::Init(ConSettings settings){
+	serverPort = settings.port;
 	peer = TCPInterface::GetInstance();
 }
 void Connector::Loop(){
@@ -31,22 +30,15 @@ void Connector::Loop(){
 			break;
 		}
 	}
-	while(1){
-		SystemAddress addresClient = peer->HasNewIncomingConnection();
-		if(addresClient!=UNASSIGNED_SYSTEM_ADDRESS){
-			std::cout << "[server connected]: "<<addresClient.ToString() <<std::endl;
-		}else{
-			break;
-		}
-	}
+	
 		
-	//game loop
 	//send loop
 	//this->SendHello();
+	
 }
 
 void Connector::ProcessPack(RakNet::Packet *pack){
-	printf("-process package-\n");
+	printf("[--ProcessPack--]\n");
 	//printf("data Lenght: %u\n",pack->length);
 	unsigned int dataLength = pack->length;
 	//printf("dataType: %i \n",pack->data[0]);
@@ -61,11 +53,16 @@ void Connector::ProcessPack(RakNet::Packet *pack){
 	byteMessageLength[3] = data[3];
 	lenghtMessage = ByteConverter::UnsignedCharToInt(byteMessageLength);
 	MessageType messageType = (MessageType)data[4];
-	printf("Length Message: %i\n", lenghtMessage);
-	printf("Length Data   : %i\n", dataLength);
-	printf("MessageType   : %i\n", data[4]);
-	printf("addres: %s\n",pack->systemAddress.ToString());
+	printf("[Process Pack]: Length Message: %i\n", lenghtMessage);
+	printf("[Process Pack]: Length Data   : %i\n", dataLength);
+	printf("[Process Pack]: MessageType   : %i\n", data[4]);
+	printf("[Process Pack]: addres: %s\n",pack->systemAddress.ToString());
 
+	ExecuteMessage(messageType,pack->systemAddress);
+	
+}
+
+void Connector::ExecuteMessage(MessageType messageType ,SystemAddress caller){
 	switch (messageType)
 	{
 	case MessageType::Ping:
@@ -74,10 +71,11 @@ void Connector::ProcessPack(RakNet::Packet *pack){
 	default:
 		break;
 	}
+	printf("\n");
 }
 
 void Connector::PingBack(SystemAddress addres){
-	printf("-ping back-\n");
+	printf("[--Ping Back--]\n\n");
 	std::vector<unsigned char> dataLenght = ByteConverter::IntToUnsignedCharArray(5);
 	unsigned char hello[5];
 	hello[0]=dataLenght.at(0);
@@ -88,6 +86,7 @@ void Connector::PingBack(SystemAddress addres){
 
 	peer->Send((const char *)hello, 5,addres,false);
 	//peer->remoteClients[0]->outgoingDataMutex
+	printf("\n");
 }
 
 void Connector::SendHello(){

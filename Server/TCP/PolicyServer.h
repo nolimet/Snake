@@ -10,7 +10,7 @@ public:
 	PolicyServer(void);
 	~PolicyServer(void);
 	virtual void ProcessPack(Packet *pack);
-	virtual void Init(int port);
+	virtual void Init(ConSettings settings);
 	virtual void Loop();
 };
 

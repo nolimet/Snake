@@ -23,6 +23,12 @@
     <Filter Include="rest">
       <UniqueIdentifier>{e977a450-d6f6-478c-ba7e-40441a6f13a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="net\Server">
+      <UniqueIdentifier>{4a1974ba-5f7c-40f9-bef8-41dbc1e8505e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\Server\Components">
+      <UniqueIdentifier>{7be2d3ab-b584-4b4f-94bc-3a5304101854}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\RakNet\Source\_FindFirst.h">
@@ -496,9 +502,6 @@
     <ClInclude Include="PolicyServer.h">
       <Filter>net</Filter>
     </ClInclude>
-    <ClInclude Include="Server.h">
-      <Filter>net</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>game</Filter>
     </ClInclude>
@@ -511,8 +514,15 @@
     <ClInclude Include="stdafx.h">
       <Filter>rest</Filter>
     </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>net\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>net\Server\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="Enums.h">
-      <Filter>rest</Filter>
+      <Filter>net\Server\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -852,9 +862,6 @@
     <ClCompile Include="PolicyServer.cpp">
       <Filter>net</Filter>
     </ClCompile>
-    <ClCompile Include="Server.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
     <ClCompile Include="TCP.cpp" />
     <ClCompile Include="Entity.cpp">
       <Filter>game</Filter>
@@ -868,6 +875,13 @@
     <ClCompile Include="ByteConvert.cpp">
       <Filter>utils</Filter>
     </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>net\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>net\Server\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\RakNet\Source\RakNet.vcproj">

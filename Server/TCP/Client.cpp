@@ -13,8 +13,8 @@ Client::~Client(void)
 {
 }
 
-void Client::Init(int port){
-	Connector::Init(port);
+void Client::Init(ConSettings settings){
+	Connector::Init(settings);
 	printf("Client Started\n");
 	peer->Start(getServerPort(),0);
 	isServer = false;

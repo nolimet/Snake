@@ -1,5 +1,7 @@
 package utils.debug 
 {
+	import starling.display.DisplayObject;
+	import starling.display.DisplayObjectContainer;
 	import starling.display.Sprite;
 	import starling.text.TextField;
 	import starling.utils.HAlign;
@@ -24,7 +26,7 @@ package utils.debug
 		//private static var USER:Vector.<String> = new <String>[Kit,ALL,Kit_Draw_Objects,Kit_bounce];
 		private static var USER:Vector.<String> = new <String>[Server_2]; 
 		
-		private var textFields:Vector.<TextField> = new Vector.<TextField>();
+		private var textFields:Vector.<TextField>;
 		
 		public static function test(func:Function,user:String):Function 
 		{
@@ -38,8 +40,9 @@ package utils.debug
 			return null;
 		}
 		
-		public function Debug() {
-			
+		public function Debug(caller:DisplayObjectContainer) {
+			caller.addChild(this);
+			textFields = new Vector.<TextField>();
 		}
 		
 		public function addText(text:String):void {
