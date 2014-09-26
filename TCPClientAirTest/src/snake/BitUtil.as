@@ -1,5 +1,4 @@
-package  
-{
+package snake {
 	import flash.utils.ByteArray;
 	/**
 	 * ...

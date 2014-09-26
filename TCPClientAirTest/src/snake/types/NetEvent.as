@@ -1,5 +1,4 @@
-package types 
-{
+package snake.types {
 	/**
 	 * ...
 	 * @author Kit van de Bunt

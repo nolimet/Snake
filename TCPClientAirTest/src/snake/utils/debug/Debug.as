@@ -1,5 +1,4 @@
-package utils.debug 
-{
+package snake.utils.debug {
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Sprite;

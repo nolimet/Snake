@@ -1,11 +1,14 @@
-package net 
+
+package snake.net 
 {
+	import snake.utils.debug.Debug;
+	import snake.Main;
 	import feathers.controls.Button;
 	import feathers.controls.Label;
 	import feathers.themes.AeonDesktopTheme;
 	import flash.events.IOErrorEvent;
 	import flash.events.SecurityErrorEvent;
-	import net.Conection;
+	import snake.net.Conection;
 	import starling.display.Sprite;
 	import starling.events.EnterFrameEvent;
 	import starling.text.TextField;
@@ -14,8 +17,8 @@ package net
 	import flash.events.ProgressEvent;
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
-	import types.MessageType;
-	import utils.debug.Debug;
+	import snake.types.MessageType;
+	import snake.utils.debug.Debug;
 	/**
 	 * ...
 	 * @author Kit van de Bunt

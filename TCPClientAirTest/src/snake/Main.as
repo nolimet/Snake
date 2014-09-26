@@ -1,5 +1,4 @@
-package  
-{
+package snake {
 	import feathers.controls.Button;
 	import feathers.controls.ButtonGroup;
 	import feathers.controls.Label;
@@ -7,7 +6,7 @@ package
 	import feathers.themes.AeonDesktopTheme;
 	import flash.events.IOErrorEvent;
 	import flash.events.SecurityErrorEvent;
-	import net.Conection;
+	import snake.net.Conection;
 	import starling.display.Sprite;
 	import starling.events.EnterFrameEvent;
 	import starling.text.TextField;
@@ -16,9 +15,9 @@ package
 	import flash.events.ProgressEvent;
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
-	import types.MessageType;
-	import types.NetEvent;
-	import utils.debug.Debug;
+	import snake.types.MessageType;
+	import snake.types.NetEvent;
+	import snake.utils.debug.Debug;
 	//import flash.system.System.sec
 	//import aeon
 	/**
