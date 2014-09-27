@@ -16,9 +16,9 @@ namespace ByteConverter{
 		return vec;
 	}
 
-	std::string UnsignedCharToString(unsigned char* base, size_t len){
+	std::string UnsignedCharToString(unsigned char* base, int len){
 		std::string ss;
-		for(size_t i = 0; i < len; ++i){
+		for(int i = 0; i < len; ++i){
 			ss +=base[i];
 		}
 		return ss;
@@ -34,5 +34,13 @@ namespace ByteConverter{
 		unsigned char *conststr2  = (unsigned char*)cstr;
 		//delete [] cstr;
 		return conststr2;
+	}
+	
+	std::string UnsignedCharToStringAt(int at,unsigned char* base, int len){
+		std::string ss;
+		for(size_t i = at; i < (at+len); ++i){
+			ss +=base[i];
+		}
+		return ss;
 	}
 }

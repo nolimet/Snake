@@ -8,6 +8,8 @@
 #include <sstream>
 #include <iomanip>
 #include <vector>
+#include <string>
+
 //http://www.corsix.org/content/algorithmic-stdstring-creation
 
 namespace ByteConverter{
@@ -15,9 +17,11 @@ namespace ByteConverter{
 
 	std::vector<unsigned char> IntToUnsignedCharArray(int Integer);
 
-	std::string UnsignedCharToString(unsigned char* base, size_t len);
+	std::string UnsignedCharToString(unsigned char* base, int len);
 
 	unsigned char* StringToUnsignedChar(std::string str);
+
+	std::string UnsignedCharToStringAt(int at,unsigned char* base, int len);
 }
 
 #endif

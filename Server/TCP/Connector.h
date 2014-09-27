@@ -28,7 +28,7 @@ public:
 	~Connector(void);
 	virtual void Init(ConSettings settings);
 	virtual void ProcessPack(Packet *pack);
-	virtual void ExecuteMessage(MessageType messageType,SystemAddress caller);
+	virtual void ExecuteMessage(MessageType messageType, int messageLength,SystemAddress caller);
 	virtual void Loop();
 	virtual void Close();
 	int getServerPort(){

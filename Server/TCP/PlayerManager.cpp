@@ -20,6 +20,21 @@ PlayerManager::~PlayerManager(void)
 {
 }
 
+string PlayerManager::GetPlayerName(SystemAddress addres){
+	for(unsigned int i = 0;i<playerCount;i++){
+		if(players[i].getAddres()==addres){
+			return players[i].getName();
+		}
+	}
+}
+
+void PlayerManager::SetPlayerName(string name,SystemAddress addres){
+	for(unsigned int i = 0;i<playerCount;i++){
+		if(players[i].getAddres()==addres){
+			players[i].setName(name);
+		}
+	}
+}
 
 void PlayerManager::AddPlayer(SystemAddress addres){
 	printf("[--PlayerManager--]Add Player \n");

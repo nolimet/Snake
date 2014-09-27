@@ -31,7 +31,6 @@ void Server::Init(ConSettings settings){
 
 
 void Server::Loop(){
-	Connector::Loop();
 	while(1){
 		SystemAddress addresClient = peer->HasNewIncomingConnection();
 		if(addresClient!=UNASSIGNED_SYSTEM_ADDRESS){
@@ -52,9 +51,16 @@ void Server::Loop(){
 			break;
 		}
 	}
+	Connector::Loop();
 }
 
-void Server::ExecuteMessage(MessageType messageType,SystemAddress caller){
+void Server::ExecuteMessage(MessageType messageType,int messageLength,SystemAddress caller){
+	
+	int lenghtName;
+
+	unsigned char* data;
+	string dataStr;
+	string pName;
 	switch (messageType)
 	{
 	case MessageType::Ping:
@@ -62,7 +68,21 @@ void Server::ExecuteMessage(MessageType messageType,SystemAddress caller){
 		break;
 	case MessageType::PLAYER_SET_NAME:
 		//playersManager.
-		SendPlayerList();
+		data = pack->data;
+
+		unsigned char byteNameLength[4];
+		byteNameLength[0] = data[5];
+		byteNameLength[1] = data[6];
+		byteNameLength[2] = data[7];
+		byteNameLength[3] = data[8];
+		lenghtName = ByteConverter::UnsignedCharToInt(byteNameLength);
+
+		
+		dataStr = ByteConverter::UnsignedCharToStringAt(9,(pack->data),lenghtName);
+
+		playersManager.SetPlayerName(dataStr,caller);
+		pName = playersManager.GetPlayerName(caller);
+		SendPlayerList(pName);
 		break;
 	default:
 		break;
@@ -70,11 +90,11 @@ void Server::ExecuteMessage(MessageType messageType,SystemAddress caller){
 	printf("\n");
 }
 
-void Server::SendPlayerList(){
+void Server::SendPlayerList(string name){
 	printf("-Send Player List-\n");
 	
 
-	string str = "Kit";
+	string str = name;
 	int strL = str.length();
 	int messageL = 9+strL;
 	std::vector<unsigned char> dataLenght = ByteConverter::IntToUnsignedCharArray(5);

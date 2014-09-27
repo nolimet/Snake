@@ -17,8 +17,9 @@ package snake.net
 	import flash.events.ProgressEvent;
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
-	import snake.types.MessageType;
+	import snake.net.MessageType;
 	import snake.utils.debug.Debug;
+	import snake.BitUtil;
 	/**
 	 * ...
 	 * @author Kit van de Bunt
@@ -31,6 +32,8 @@ package snake.net
 		private var socket_:Socket;
 		private var pingTime:Number;
 		private var currentTime:Date;
+		
+		private var clientName:String;
 		
 		public function get socket():Socket {
 			return socket_;
@@ -51,7 +54,8 @@ package snake.net
 			return _instance;
 		}
 		
-		public function Connect():void {
+		public function Connect(name:String):void {
+			clientName = name;
 			socket_.connect(address, port);
 		}
 		
@@ -107,8 +111,8 @@ package snake.net
 		
 		private function onConnected(e:Event):void {
 			Main.debug.print("client - socket connected",Debug.Server_2);
-			PlayerSetName();
-			Ping();
+			
+			PlayerSetName(clientName);
 		}
 		
 		private function onData(e:ProgressEvent):void{
@@ -135,7 +139,6 @@ package snake.net
 			   case MessageType.PLAYER_LIST:
 				   var nameL:int = bytes.readInt();
 				   var nameUChars:Vector.<uint> = new Vector.<uint>();
-				   var bs:ByteArray = new ByteArray();
 				   var name:String = new String();
 				   for (var i:int = 0; i < nameL; i++) 
 				   {
@@ -164,15 +167,23 @@ package snake.net
 			trace("pingTime------------------: "+pingTime);
 		}
 		
-		public function PlayerSetName():void {
+		private function PlayerSetName(name:String):void {
 			trace("connected:"+socket_.connected);
 			trace("PLAYER_SET_NAME");
 			var messageData:ByteArray = new ByteArray();
 			messageData.endian = Endian.LITTLE_ENDIAN;
-			var messageL:int = 5;
+			
+			var playerName:String = name;
+			
+			var messageL:int = 5+playerName.length;
 			messageData.writeInt(messageL);
+			
 			var messageType:int = MessageType.PLAYER_SET_NAME;
 			messageData.writeByte(messageType);
+			
+			messageData.writeInt(playerName.length);
+			
+			BitUtil.stringToByteArray(playerName, messageData);
 			
 			socket_.writeBytes(messageData);
 			socket_.flush();

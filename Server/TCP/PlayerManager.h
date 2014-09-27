@@ -11,5 +11,7 @@ public:
 	~PlayerManager(void);
 	void AddPlayer(SystemAddress addres);
 	void RemovePlayer(SystemAddress addres);
+	void SetPlayerName(string name,SystemAddress addres);
+	string GetPlayerName(SystemAddress addres);
 };
 

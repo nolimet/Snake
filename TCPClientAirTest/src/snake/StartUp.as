@@ -11,7 +11,7 @@ package snake {
 
 		public function StartUp():void
 		{
-			_starling = new Starling(Game, stage);
+			_starling = new Starling(Main, stage);
 			_starling.start();
 			trace("start");
 		}

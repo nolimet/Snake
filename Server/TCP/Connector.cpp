@@ -30,11 +30,8 @@ void Connector::Loop(){
 			break;
 		}
 	}
-	
-		
 	//send loop
 	//this->SendHello();
-	
 }
 
 void Connector::ProcessPack(RakNet::Packet *pack){
@@ -45,24 +42,24 @@ void Connector::ProcessPack(RakNet::Packet *pack){
 
 	unsigned char* data = pack->data;
 	
-	int lenghtMessage = data[0] +(data[1]<<010)+(data[2]<<020)+(data[3]<<030);
+	//int lenghtMessage = data[0] +(data[1]<<010)+(data[2]<<020)+(data[3]<<030);
 	unsigned char byteMessageLength[4];
 	byteMessageLength[0] = data[0];
 	byteMessageLength[1] = data[1];
 	byteMessageLength[2] = data[2];
 	byteMessageLength[3] = data[3];
-	lenghtMessage = ByteConverter::UnsignedCharToInt(byteMessageLength);
+	int lenghtMessage = ByteConverter::UnsignedCharToInt(byteMessageLength);
 	MessageType messageType = (MessageType)data[4];
 	printf("[Process Pack]: Length Message: %i\n", lenghtMessage);
 	printf("[Process Pack]: Length Data   : %i\n", dataLength);
 	printf("[Process Pack]: MessageType   : %i\n", data[4]);
 	printf("[Process Pack]: addres: %s\n",pack->systemAddress.ToString());
 
-	ExecuteMessage(messageType,pack->systemAddress);
+	ExecuteMessage(messageType,lenghtMessage,pack->systemAddress);
 	
 }
 
-void Connector::ExecuteMessage(MessageType messageType ,SystemAddress caller){
+void Connector::ExecuteMessage(MessageType messageType, int MessageLenth ,SystemAddress caller){
 	switch (messageType)
 	{
 	case MessageType::Ping:

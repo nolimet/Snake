@@ -12,8 +12,8 @@ public:
 	~Server(void);
 	virtual void Init(ConSettings settings)override;
 	virtual void Loop()override;
-	virtual void ExecuteMessage(MessageType messageType,SystemAddress caller)override;
+	virtual void ExecuteMessage(MessageType messageType,int messageLength,SystemAddress caller)override;
 	void AddClient();
-	void SendPlayerList();
+	void SendPlayerList(string name);
 };
 

@@ -6,7 +6,7 @@ package snake {
 	 */
 	public class BitUtil 
 	{
-		static var rByteArray:ByteArray;
+		static public var rByteArray:ByteArray;
 		
 		static public function ByteArrayToInt(byteArray:ByteArray):int{
 			if (byteArray.length != 4) {
@@ -22,6 +22,15 @@ package snake {
 			rByteArray[2] = (Integer >> 16) & 0xFF;
 			rByteArray[3] = (Integer >>> 24);
 			return rByteArray;
+		}
+		
+		static public function stringToByteArray(string:String, wrightTo:ByteArray):void {
+			var stringLength:int = string.length;
+			var i:int;
+			for (i = 0; i < stringLength; i++) 
+			{
+				wrightTo.writeByte( string.charCodeAt(i));
+			}
 		}
 	}
 

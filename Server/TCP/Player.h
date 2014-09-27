@@ -12,6 +12,7 @@ public:
 	Player(string name = "new Player",SystemAddress addres = RakNet::UNASSIGNED_SYSTEM_ADDRESS);
 	~Player(void);
 	string getName() const;
+	void setName(string name);
 	SystemAddress getAddres() const;
 };
 

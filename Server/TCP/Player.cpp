@@ -18,6 +18,10 @@ string Player::getName() const{
 	return name_;
 }
 
+void Player::setName(string name){
+	name_ = name;
+}
+
 SystemAddress Player::getAddres() const{
 	return addres_;
 }
