@@ -5,7 +5,7 @@ class PlayerManager
 {
 private:
 	Player *players;
-	unsigned int playerCount;
+	int playerCount;
 public:
 	PlayerManager(void);
 	~PlayerManager(void);
@@ -13,5 +13,8 @@ public:
 	void RemovePlayer(SystemAddress addres);
 	void SetPlayerName(string name,SystemAddress addres);
 	string GetPlayerName(SystemAddress addres);
+
+	Player* GetPlayers ()const{return players;};
+	int GetPlayerCount ()const{return playerCount;};
 };
 

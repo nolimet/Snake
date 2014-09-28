@@ -14,6 +14,6 @@ public:
 	virtual void Loop()override;
 	virtual void ExecuteMessage(MessageType messageType,int messageLength,SystemAddress caller)override;
 	void AddClient();
-	void SendPlayerList(string name);
+	void SendPlayerList();
 };
 

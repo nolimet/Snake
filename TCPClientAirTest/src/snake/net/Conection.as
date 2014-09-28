@@ -115,39 +115,44 @@ package snake.net
 			PlayerSetName(clientName);
 		}
 		
-		private function onData(e:ProgressEvent):void{
-		   Main.debug.print(("-process packege-") , Debug.Server_2);
-		   var bytes:ByteArray = new ByteArray;
-		   bytes.endian = Endian.LITTLE_ENDIAN;
-		   socket_.readBytes(bytes);
-		   var messgaeLength:int = bytes.readInt();
-		   Main.debug.print(("Length Message: " + messgaeLength) , Debug.Server_2);
-		   var mesageType:int = bytes.readByte();
-		   Main.debug.print(("Message Type: " + mesageType) , Debug.Server_2);
-		   switch(mesageType) {
-			   
-			   case MessageType.PING_BACK:
-				   currentTime = new Date();
-					var thisPingTime:Number = pingTime-currentTime.time;
-					Main.debug.print(("Ping: " + thisPingTime) , Debug.Server_2);
-				   break;
-				   
-			   case MessageType.HELLO:
-					Main.debug.print(("hello Message") , Debug.Server_2);
-				   break;
-				   
-			   case MessageType.PLAYER_LIST:
-				   var nameL:int = bytes.readInt();
-				   var nameUChars:Vector.<uint> = new Vector.<uint>();
-				   var name:String = new String();
-				   for (var i:int = 0; i < nameL; i++) 
-				   {
-					  var newLLetter:String = String.fromCharCode(bytes.readUnsignedByte());
-					  name = name+newLLetter ;
-				   }
-				   Main.debug.print(("Player List: "+name) , Debug.Server_2);
-				   break;
-		   }
+		private function onData(e:ProgressEvent):void {
+			Main.debug.print(("-process packege-") , Debug.Server_2);
+			var bytes:ByteArray = new ByteArray;
+			bytes.endian = Endian.LITTLE_ENDIAN;
+			socket_.readBytes(bytes);
+			while(bytes.bytesAvailable>0){
+				var messgaeLength:int = bytes.readInt();
+				Main.debug.print(("Length Message: " + messgaeLength) , Debug.Server_2);
+				var mesageType:int = bytes.readByte();
+				Main.debug.print(("Message Type: " + mesageType) , Debug.Server_2);
+				switch(mesageType) {
+					case MessageType.PING_BACK:
+						currentTime = new Date();
+						var thisPingTime:Number = pingTime-currentTime.time;
+						Main.debug.print(("Ping: " + thisPingTime) , Debug.Server_2);
+						break;
+						
+					case MessageType.HELLO:
+						Main.debug.print(("hello Message") , Debug.Server_2);
+						break;
+						
+					case MessageType.PLAYER_LIST:
+						var listLength:int = bytes.readInt();
+						Main.debug.print(("[Player List] Length:"+listLength) , Debug.Server_2);
+						for (var j:int = 0; j < listLength; j++) 
+						{
+							var name:String = new String();
+							var nameL:int = bytes.readInt();
+							for (var i:int = 0; i < nameL; i++) 
+							{
+								var newLLetter:String = String.fromCharCode(bytes.readUnsignedByte());
+								name = name+newLLetter ;
+							}
+							Main.debug.print(("-Player: "+name) , Debug.Server_2);
+						}
+						break;
+			   }
+			}
 		}
 		
 		public function Ping():void {
