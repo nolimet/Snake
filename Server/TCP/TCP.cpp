@@ -17,7 +17,7 @@ Connector* policyServer;
 
 const int SERVER_PORT = 11100;
 const int POLICY_SERVER_PORT = 843;
-int maxPlayers = 4;
+int maxPlayers = 32;
 
 void WaitForEnter(void) { 
 	printf("Press Enter to continue: "); 

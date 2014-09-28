@@ -10,6 +10,7 @@ package snake.menu {
 		public static const PLAY:String = "playEvent";
 		public static const BACK:String = "back";
 		public static const PING:String = "pingEvent";
+		public static const NEW_PLAYERLIST:String = "newPlayerList";
 	}
 
 }

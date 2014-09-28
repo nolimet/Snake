@@ -1,6 +1,8 @@
 
 package snake.net 
 {
+	import flash.events.OutputProgressEvent;
+	import snake.menu.ScreenEvents;
 	import snake.utils.debug.Debug;
 	import snake.Main;
 	import feathers.controls.Button;
@@ -35,6 +37,8 @@ package snake.net
 		
 		private var clientName:String;
 		
+		public var playerList:Vector.<Player>;
+		
 		public function get socket():Socket {
 			return socket_;
 		}
@@ -55,14 +59,19 @@ package snake.net
 		}
 		
 		public function Connect(name:String):void {
-			clientName = name;
+			
 			socket_.connect(address, port);
+			
+			clientName = name;
+			socket_.timeout = 2000;
+			playerList = new Vector.<Player>();
+			Main.debug.print(("[client Timeout]:"+socket_.timeout.toString()+"ms"),Debug.Server_2);
 		}
 		
 		public function DisConnect():void {
-			if(socket.connected){
-				socket.close();
-				socket.dispatchEvent(new Event(Event.CLOSE));
+			if(socket_.connected){
+				socket_.close();
+				socket_.dispatchEvent(new Event(Event.CLOSE));
 				Main.debug.print(("[State]DisConnect"), Debug.Server_2);
 			}else {
 				Main.debug.print(("[State]Not Connected Cannot Disconnect"), Debug.Server_2);
@@ -70,7 +79,8 @@ package snake.net
 		}
 		
 		private function createSocket():void {   
-			Main.debug.print(("[State]Connecting >" + address + "<"), Debug.Server_2);
+			Main.debug.print(("[State]createSocket addres"), Debug.Server_2);
+			//Main.debug.print(("[State]createSocket addres>" + address + "<"), Debug.Server_2);
 			
 			socket_ = new Socket();
 			
@@ -82,6 +92,7 @@ package snake.net
 			socket_.addEventListener(Event.DEACTIVATE, onDeactivate);
 			socket_.addEventListener(Event.ACTIVATE, onActivate);
 			socket_.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
+			socket_.addEventListener(OutputProgressEvent.OUTPUT_PROGRESS, onDataOut);
 			
 			
 			/*
@@ -93,6 +104,9 @@ package snake.net
 			*/
 		}
 		
+		private function onDataOut(e:OutputProgressEvent):void {
+			Main.debug.print("[State]onDataOut",Debug.Server_2);
+		}
 		private function onClose(e:Event):void {
 			Main.debug.print("[State]onClose",Debug.Server_2);
 		}
@@ -138,6 +152,7 @@ package snake.net
 						
 					case MessageType.PLAYER_LIST:
 						var listLength:int = bytes.readInt();
+						playerList = new Vector.<Player>();
 						Main.debug.print(("[Player List] Length:"+listLength) , Debug.Server_2);
 						for (var j:int = 0; j < listLength; j++) 
 						{
@@ -148,7 +163,9 @@ package snake.net
 								var newLLetter:String = String.fromCharCode(bytes.readUnsignedByte());
 								name = name+newLLetter ;
 							}
-							Main.debug.print(("-Player: "+name) , Debug.Server_2);
+							playerList.push(new Player(name));
+							Main.debug.print(("-Player: " + name) , Debug.Server_2);
+							Main.eventManager.dispatchEvent(new starling.events.Event( ScreenEvents.NEW_PLAYERLIST ));
 						}
 						break;
 			   }

@@ -8,10 +8,13 @@ package snake {
 	import feathers.themes.AeonDesktopTheme;
 	import flash.events.IOErrorEvent;
 	import flash.events.SecurityErrorEvent;
+	import snake.menu.EventManager;
+	import snake.menu.ScreenEvents;
 	import snake.menu.screens.*;
 	import snake.net.Conection;
 	import starling.display.Sprite;
 	import starling.events.EnterFrameEvent;
+	import starling.events.EventDispatcher;
 	import starling.text.TextField;
 	import flash.net.Socket;
 	import flash.events.Event;
@@ -36,10 +39,12 @@ package snake {
 		private var con:Conection;
 		public static var debug:Debug;
 		
+		public static var eventManager:EventManager;
+		
 		private var navigator:ScreenNavigator;
 		
 		public function Main() {
-			
+			eventManager = new EventManager();
 			debug = new Debug(this);
 			debug.touchable = false;
 			
@@ -59,6 +64,7 @@ package snake {
 			navigator.showScreen( ScreenID.CONNECT_MENU );
 			
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, addedToStage);
+			eventManager.addEventListener(ScreenEvents.NEW_PLAYERLIST,OnNewPlayerList);
 		}
 		
 		private function addedToStage():void {
@@ -68,15 +74,18 @@ package snake {
 			con = Conection.GetInstance();
 		}
 		
+		private function OnNewPlayerList( event:starling.events.Event ):void
+		{
+			navigator.activeScreen.dispatchEvent(new starling.events.Event(ScreenEvents.NEW_PLAYERLIST));
+		}
 		//{ button functions
 		
 		private function OnButtonConnect( event:starling.events.Event ):void
 		{
 			trace("button Connect Pressed Name:"+event.data.name);
 			//con.Ping();
-			
-			con.Connect(event.data.name);
 			con.socket.addEventListener(Event.CONNECT,OnConnect);
+			con.Connect(event.data.name);
 		}
 		
 		private function OnButtonPing( event:starling.events.Event ):void

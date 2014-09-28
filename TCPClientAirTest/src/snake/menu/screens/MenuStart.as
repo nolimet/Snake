@@ -33,6 +33,7 @@ package snake.menu.screens
 			startGroup.dataProvider = menuStart;
 			
 			namefield = new TextInput();
+			namefield.text = "Snake";
 			addChild(namefield);
 			namefield.x = 300;
 		}

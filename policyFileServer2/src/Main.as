@@ -1,5 +1,7 @@
 package {
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.ProgressEvent;
 	import flash.net.ServerSocket;
 	import flash.events.ServerSocketConnectEvent;
 	import flash.net.Socket;
@@ -10,10 +12,14 @@ package {
 	 */
 	public class Main extends Sprite {
 		private var sock:ServerSocket;
-		private var texts:Vector.<TextField> = new Vector.<TextField>();
-		private var date:Date = new Date();
+		private var texts:Vector.<TextField>;
+		private var date:Date;
+		
+		private var clients:Vector.<NewClient>;
 		
 		public function Main():void {
+			texts = new Vector.<TextField>();
+			clients = new Vector.<NewClient>();
 			sock = new ServerSocket();
 			sock.addEventListener(ServerSocketConnectEvent.CONNECT, OnConnect);
 			sock.bind(843);
@@ -22,13 +28,12 @@ package {
 			if (!sock.listening || !sock.bound){
 				Print("Cannot start");
 			}else {
-				Print("started");
+				Print("started port: 843");
 			}
 		}
 		
 		private function UpdatePrintList():void {
 			for (var i:int = texts.length-1; i > -1; i--) {
-				trace(i);
 				texts[i].y -= 20;
 				if (texts[i].y < 0) {
 					removeChild(texts[i]);
@@ -52,10 +57,17 @@ package {
 		
 		private function OnConnect(e:ServerSocketConnectEvent):void {
 			Print("new connect");
-			e.socket.writeUTFBytes('<cross-domain-policy><allow-access-from domain="*" to-ports="11100" /></cross-domain-policy>');
-			e.socket.writeByte(0);
-			e.socket.flush();
-			e.socket.close();
+			clients.push(new NewClient(e).addEventListener(ClientEvents.DATA_SEND,dataSend));
+		}
+		
+		private function dataSend(e:Event):void {
+			for (var i:int = 0; i < clients.length; i++) {
+				if (e.target == clients[i]) {
+					clients.splice(i, 1);
+					Print("socked removed");
+				}
+			}
+			
 		}
 	}
 }
