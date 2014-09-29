@@ -2,7 +2,9 @@
 
 :: Path to Flex SDK
 ::set FLEX_SDK=C:\Users\SONY\AppData\Local\FlashDevelop\Apps\flexairsdk\4.6.0+14.0.0
-set FLEX_SDK=C:\Users\jesse\AppData\Local\FlashDevelop\Apps\flexairsdk\4.6.0+14.0.0
+set FLEX_SDK=%LOCALAPPDATA%\FlashDevelop\Apps\flexairsdk\4.6.0+14.0.0
+
+
 
 
 :validation

@@ -30,7 +30,8 @@ package snake.net
 		
 		static public const port:int = 11100;
 		//static public const address:String = "192.168.0.101";
-		static public const address:String = "84.80.98.251";
+		//static public const address:String = "84.80.98.251";
+		static public const address:String = "127.0.0.1";
 		private var socket_:Socket;
 		private var pingTime:Number;
 		private var currentTime:Date;
