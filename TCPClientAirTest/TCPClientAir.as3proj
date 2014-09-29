@@ -12,10 +12,6 @@
     <movie minorVersion="0" />
     <movie platform="AIR" />
     <movie background="#808080" />
-<<<<<<< HEAD
-=======
-    <movie preferredSDK="C:\Users\SONY\AppData\Local\FlashDevelop\Apps\flexairsdk\4.6.0+14.0.0" />
->>>>>>> origin/master
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>

@@ -1,15 +1,8 @@
 :user_configuration
 
-:: Path to Flex SDK
-<<<<<<< HEAD
+:: Path to Flex SDKs
 ::set FLEX_SDK=C:\Users\SONY\AppData\Local\FlashDevelop\Apps\flexairsdk\4.6.0+14.0.0
 set FLEX_SDK=%LOCALAPPDATA%\FlashDevelop\Apps\flexairsdk\4.6.0+14.0.0
-
-
-=======
-set FLEX_SDK=C:\Users\SONY\AppData\Local\FlashDevelop\Apps\flexairsdk\4.6.0+14.0.0
-::set FLEX_SDK=L:\Development\AIRSDK_Compiler
->>>>>>> origin/master
 
 
 :validation
