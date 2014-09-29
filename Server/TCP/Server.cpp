@@ -132,6 +132,7 @@ void Server::SendPlayerList(){
 			message[messageID]=nameInBytes[j];
 			messageID++;
 		}
+		delete [] nameInBytes;
 	}
 	printf("-messageID %d-\n",messageID);
 	printf("-messageL %d-\n",messageL);
