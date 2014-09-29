@@ -7,11 +7,15 @@
     <movie path="bin\TCPClientAir.swf" />
     <movie fps="30" />
     <movie width="792" />
-    <movie height="792" />
+    <movie height="660" />
     <movie version="14" />
     <movie minorVersion="0" />
     <movie platform="AIR" />
     <movie background="#808080" />
+<<<<<<< HEAD
+=======
+    <movie preferredSDK="C:\Users\SONY\AppData\Local\FlashDevelop\Apps\flexairsdk\4.6.0+14.0.0" />
+>>>>>>> origin/master
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
