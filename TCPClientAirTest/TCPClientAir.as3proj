@@ -12,7 +12,6 @@
     <movie minorVersion="0" />
     <movie platform="AIR" />
     <movie background="#808080" />
-    <movie preferredSDK="L:\Development\AIRSDK_Compiler" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>

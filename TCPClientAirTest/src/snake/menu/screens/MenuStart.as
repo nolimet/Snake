@@ -22,6 +22,7 @@ package snake.menu.screens
 		]);
 		
 		private var namefield:TextInput;
+		private var ip:TextInput;
 		
 		public function MenuStart() {}
 		
@@ -36,12 +37,19 @@ package snake.menu.screens
 			namefield.text = "Snake";
 			addChild(namefield);
 			namefield.x = 300;
+			
+			ip = new TextInput();
+			ip.text = "127.0.0.1";
+			addChild(ip);
+			ip.x = 300;
+			ip.y = 25;
 		}
 		
 		private function OnButtonConnect(e:Event):void {
 			if (namefield.text.length > 2) {
 				var data:Object = new Object();
 				data.name = namefield.text;
+				data.ip = ip.text;
 				dispatchEventWith( ScreenEvents.CONNECT,false,data );
 			}else {
 				Main.debug.print("[MenuStart]: please enter a name minimum length 3", Debug.Server_2);

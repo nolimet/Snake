@@ -58,9 +58,9 @@ package snake.net
 			return _instance;
 		}
 		
-		public function Connect(name:String):void {
+		public function Connect(name:String, ip:String = address):void {
 			
-			socket_.connect(address, port);
+			socket_.connect(ip, port);
 			
 			clientName = name;
 			socket_.timeout = 2000;
