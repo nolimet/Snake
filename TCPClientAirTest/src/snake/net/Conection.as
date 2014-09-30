@@ -152,22 +152,7 @@ package snake.net
 						break;
 						
 					case MessageType.PLAYER_LIST:
-						var listLength:int = bytes.readInt();
-						playerList = new Vector.<Player>();
-						Main.debug.print(("[Player List] Length:"+listLength) , Debug.Server_2);
-						for (var j:int = 0; j < listLength; j++) 
-						{
-							var name:String = new String();
-							var nameL:int = bytes.readInt();
-							for (var i:int = 0; i < nameL; i++) 
-							{
-								var newLLetter:String = String.fromCharCode(bytes.readUnsignedByte());
-								name = name+newLLetter ;
-							}
-							playerList.push(new Player(name));
-							Main.debug.print(("-Player: " + name) , Debug.Server_2);
-							Main.eventManager.dispatchEvent(new starling.events.Event( ScreenEvents.NEW_PLAYERLIST ));
-						}
+						playerList(bytes);
 						break;
 			   }
 			}
@@ -212,5 +197,30 @@ package snake.net
 			socket_.flush();
 		}
 		
+		private function PlayerList(_bytes:ByteArray) {
+			
+			var listLength:int = _bytes.readInt();
+			playerList = new Vector.<Player>();
+			Main.debug.print(("[Player List] Length:"+listLength) , Debug.Server_2);
+			for (var j:int = 0; j < listLength; j++) 
+			{
+				//gettting name
+				var name:String = new String();
+				var nameL:int = _bytes.readInt();
+				for (var i:int = 0; i < nameL; i++) 
+				{
+					var newLLetter:String = String.fromCharCode(_bytes.readUnsignedByte());
+					name = name+newLLetter ;
+				}
+				//getting ID
+				var id:int = 0;
+				//getting Dir
+				var dir:int = 0;
+				playerList.push(new Player(name,dir,id));
+				Main.debug.print(("-Player: " + name) , Debug.Server_2);
+				Main.eventManager.dispatchEvent(new starling.events.Event( ScreenEvents.NEW_PLAYERLIST ));
+			}
+			
+		}
 	}
 }
