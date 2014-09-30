@@ -7,9 +7,14 @@ package snake.net
 	public class Player 
 	{
 		public var name:String;
-		public function Player(_name:String) 
+		public var dir:int;
+		public var id:int;
+		
+		public function Player(_name:String , _dir:int, _id:int) 
 		{
 			name = _name;
+			dir = _dir;
+			id = _id;
 		}
 		
 	}
