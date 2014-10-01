@@ -143,8 +143,8 @@ package snake.net
 				switch(mesageType) {
 					case MessageType.PING_BACK:
 						currentTime = new Date();
-						var thisPingTime:Number = pingTime-currentTime.time;
-						Main.debug.print(("Ping: " + thisPingTime) , Debug.Server_2);
+						var thisPingTime:Number = currentTime.time-pingTime;
+						Main.debug.print(("Ping: " + thisPingTime + "ms") , Debug.Server_2);
 						break;
 						
 					case MessageType.HELLO:
@@ -152,7 +152,7 @@ package snake.net
 						break;
 						
 					case MessageType.PLAYER_LIST:
-						playerList(bytes);
+						PlayerList(bytes);
 						break;
 			   }
 			}
@@ -220,7 +220,6 @@ package snake.net
 				Main.debug.print(("-Player: " + name) , Debug.Server_2);
 				Main.eventManager.dispatchEvent(new starling.events.Event( ScreenEvents.NEW_PLAYERLIST ));
 			}
-			
 		}
 	}
 }
