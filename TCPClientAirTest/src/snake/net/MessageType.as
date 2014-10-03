@@ -18,6 +18,7 @@ package snake.net {
 		//server to client
 		public static const PLAYER_LIST:int = 100;
 		public static const PLAYER_DIRECTION_LIST:int = 101;
+		public static const PLAYER_POSITION_LIST:int = 102
 		
 	}
 }
