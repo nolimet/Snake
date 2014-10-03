@@ -26,7 +26,7 @@ package snake.net
 	 * ...
 	 * @author Kit van de Bunt
 	 */
-	public class Conection {
+	public class Connection {
 		
 		static public const port:int = 11100;
 		//static public const address:String = "192.168.0.101";
