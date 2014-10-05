@@ -95,7 +95,7 @@ void PlayerManager::AddPlayer(SystemAddress addres){
 		playerCount++;
 		delete [] temp;
 	}
-	players[playerCount].id(GetFirstUnUsedId());
+	players[playerCount-1].id(GetFirstUnUsedId());
 	cout << "[player created addres:"<<players[playerCount].getAddres().ToString()<<endl;
 	cout << "[player count]:"<<playerCount<<endl;
 }

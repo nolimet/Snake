@@ -57,7 +57,7 @@ void Server::Loop(){
 }
 
 void Server::ExecuteMessage(MessageType messageType,int messageLength,SystemAddress caller){
-	
+	unsigned char* data;
 	string dataStr;
 	switch (messageType)
 	{
@@ -65,7 +65,6 @@ void Server::ExecuteMessage(MessageType messageType,int messageLength,SystemAddr
 		this->Connector::PingBack(pack->systemAddress);
 		break;
 	case MessageType::PLAYER_SET_NAME:
-		unsigned char* data;
 		data = pack->data;
 		//read name Lenght
 		int lenghtName;
@@ -85,7 +84,6 @@ void Server::ExecuteMessage(MessageType messageType,int messageLength,SystemAddr
 
 		break;
 	case MessageType::PLAYER_READY:
-		unsigned char* data;
 		data = pack->data;
 		if(data[5]==1){
 			playersManager.SetPlayerReady(true,caller);
