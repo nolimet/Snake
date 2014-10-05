@@ -2,11 +2,13 @@
 #include "Connector.h"
 #include "PlayerManager.h"
 #include "Player.h"
+#include "Game.h"
 
 class Server : public Connector
 {
 private:
 	PlayerManager playersManager;
+	Game *game;
 public:
 	Server(void);
 	~Server(void);

@@ -5,8 +5,11 @@
 
 class Entity
 {
+private:
+	int x_;
+	int y_;
 public:
-	Entity(void);
+	Entity(int x = 0, int y =0);
 	~Entity(void);
 };
 

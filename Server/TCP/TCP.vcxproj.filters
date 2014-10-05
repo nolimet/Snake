@@ -14,9 +14,6 @@
     <Filter Include="utils">
       <UniqueIdentifier>{5b17cc08-761c-4793-a0a6-93d8ca2ff078}</UniqueIdentifier>
     </Filter>
-    <Filter Include="game">
-      <UniqueIdentifier>{ed3323ed-cfaf-4d75-8567-8ba87a1e5441}</UniqueIdentifier>
-    </Filter>
     <Filter Include="net\base">
       <UniqueIdentifier>{34ae8b5a-d03d-4a2b-8406-e893b0cd25d5}</UniqueIdentifier>
     </Filter>
@@ -26,8 +23,20 @@
     <Filter Include="net\Server">
       <UniqueIdentifier>{4a1974ba-5f7c-40f9-bef8-41dbc1e8505e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="net\Server\Components">
+    <Filter Include="net\Server\Game">
+      <UniqueIdentifier>{a8140c24-e8e9-42f4-97b4-ff121b1ba8f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\Client">
+      <UniqueIdentifier>{88cfce0d-6d91-4779-ba1d-c36954f08bd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\Server\Game\entity">
+      <UniqueIdentifier>{ed3323ed-cfaf-4d75-8567-8ba87a1e5441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\Server\player">
       <UniqueIdentifier>{7be2d3ab-b584-4b4f-94bc-3a5304101854}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\polecyServer">
+      <UniqueIdentifier>{35cc0bdb-5461-4f5c-a55c-c0d493b60783}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -496,14 +505,8 @@
     <ClInclude Include="ByteConvert.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="Client.h">
-      <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="PolicyServer.h">
-      <Filter>net</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>game</Filter>
+      <Filter>net\Server\Game\entity</Filter>
     </ClInclude>
     <ClInclude Include="Connector.h">
       <Filter>net\base</Filter>
@@ -518,11 +521,22 @@
       <Filter>net\Server</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>net\Server\Components</Filter>
+      <Filter>net\Server\player</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerManager.h" />
+    <ClInclude Include="Game.h">
+      <Filter>net\Server\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>net\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>net\Server\player</Filter>
+    </ClInclude>
     <ClInclude Include="Enums.h">
-      <Filter>net\Server\Components</Filter>
+      <Filter>net\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="PolicyServer.h">
+      <Filter>net\polecyServer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -856,15 +870,9 @@
     <ClCompile Include="..\..\RakNet\Source\WSAStartupSingleton.cpp">
       <Filter>RakNet</Filter>
     </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
-    <ClCompile Include="PolicyServer.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
     <ClCompile Include="TCP.cpp" />
     <ClCompile Include="Entity.cpp">
-      <Filter>game</Filter>
+      <Filter>net\Server\Game\entity</Filter>
     </ClCompile>
     <ClCompile Include="Connector.cpp">
       <Filter>net\base</Filter>
@@ -879,9 +887,20 @@
       <Filter>net\Server</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>net\Server\Components</Filter>
+      <Filter>net\Server\player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="Game.cpp">
+      <Filter>net\Server\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>net\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>net\Server\player</Filter>
+    </ClCompile>
+    <ClCompile Include="PolicyServer.cpp">
+      <Filter>net\polecyServer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\RakNet\Source\RakNet.vcproj">

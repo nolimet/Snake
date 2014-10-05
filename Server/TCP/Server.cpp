@@ -58,9 +58,6 @@ void Server::Loop(){
 
 void Server::ExecuteMessage(MessageType messageType,int messageLength,SystemAddress caller){
 	
-	int lenghtName;
-
-	unsigned char* data;
 	string dataStr;
 	switch (messageType)
 	{
@@ -68,23 +65,41 @@ void Server::ExecuteMessage(MessageType messageType,int messageLength,SystemAddr
 		this->Connector::PingBack(pack->systemAddress);
 		break;
 	case MessageType::PLAYER_SET_NAME:
-		//playersManager.
+		unsigned char* data;
 		data = pack->data;
-
+		//read name Lenght
+		int lenghtName;
 		unsigned char byteNameLength[4];
 		byteNameLength[0] = data[5];
 		byteNameLength[1] = data[6];
 		byteNameLength[2] = data[7];
 		byteNameLength[3] = data[8];
 		lenghtName = ByteConverter::UnsignedCharToInt(byteNameLength);
-
-		
+		//read name
 		dataStr = ByteConverter::UnsignedCharToStringAt(9,(pack->data),lenghtName);
-
+		//set name in player list
 		playersManager.SetPlayerName(dataStr,caller);
 		SendPlayerList();
 		break;
+	case MessageType::PLAYER_SET_NEW_DIRECTION:
+
+		break;
+	case MessageType::PLAYER_READY:
+		unsigned char* data;
+		data = pack->data;
+		if(data[5]==1){
+			playersManager.SetPlayerReady(true,caller);
+		}else if(data[5]==0){
+			playersManager.SetPlayerReady(false,caller);
+		}else{
+			printf("[Error]PLAYER_READY WHY NO BOOL?");
+		}
+		break;
+	case MessageType::ADMIN_START:
+		game = new Game();
+		break;
 	default:
+		printf("[Error]recieved message type not found!!!\n");
 		break;
 	}
 	printf("\n");
@@ -119,6 +134,8 @@ void Server::SendPlayerList(){
 
 	int messageID = 9;
 	for(int i = 0;i < playerCount;i++){
+		message[messageID] = playersManager.GetPlayers()[i].id();
+		messageID++;
 		string playerName = playersManager.GetPlayers()[i].getName();
 		int playerNameLenth = playerName.length();
 		std::vector<unsigned char> nameLength = ByteConverter::IntToUnsignedCharArray(playerNameLenth);

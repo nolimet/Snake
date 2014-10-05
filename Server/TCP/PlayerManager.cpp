@@ -20,18 +20,57 @@ PlayerManager::~PlayerManager(void)
 {
 }
 
-string PlayerManager::GetPlayerName(SystemAddress addres){
+Player PlayerManager::GetPlayer(SystemAddress addres){
 	for(unsigned int i = 0;i<playerCount;i++){
 		if(players[i].getAddres()==addres){
-			return players[i].getName();
+			return (players[i]);
 		}
 	}
 }
+string PlayerManager::GetPlayerName(SystemAddress addres){
+	GetPlayer(addres).getName();
+}
 
 void PlayerManager::SetPlayerName(string name,SystemAddress addres){
+	GetPlayer(addres).setName(name);
+}
+
+void PlayerManager::SetPlayerReady(bool ready,SystemAddress addres){
+	GetPlayer(addres).ready(ready);
+}
+
+unsigned char PlayerManager::GetPlayerId(SystemAddress addres){
+	return GetPlayer(addres).id();
+}
+void PlayerManager::SetPlayerId(unsigned char id,SystemAddress addres){
+	GetPlayer(addres).id(id);
+}
+
+bool PlayerManager::GetPlayerReady(SystemAddress addres){
+	GetPlayer(addres).ready();
+}
+
+bool PlayerManager::GetPlayersReady(){
 	for(unsigned int i = 0;i<playerCount;i++){
-		if(players[i].getAddres()==addres){
-			players[i].setName(name);
+		if(!players[i].ready()){
+			return false;
+		}
+	}
+	return true;
+}
+
+unsigned char PlayerManager::GetFirstUnUsedId(){
+	for(unsigned int i = 0;i<255;i++){
+		bool idFound;
+		for(unsigned int j = 0;j<playerCount;j++){
+			if(players[j].id()==i){
+				break;
+			}
+			idFound = true;
+		}
+		if(idFound){
+			return i;
+			break;
 		}
 	}
 }
@@ -40,31 +79,25 @@ void PlayerManager::AddPlayer(SystemAddress addres){
 	printf("[--PlayerManager--]Add Player \n");
 	Player newPlayer = Player("new Player",addres);
 	
-	string name;
 	if(players == NULL){
 		printf("[PlayerManager]First Player \n");
 		players = new Player[1];
 		players[0] = newPlayer;
-		name = players[0].getName();
-		cout << "[player: "<<name<<"] created"<<endl;
-		cout << "[player: "<<name<<"] addres:"<<players[0].getAddres().ToString()<<endl;
 		playerCount++;
 	}else{
 		printf("[PlayerManager]Add Player \n");
 		Player *temp = players;
 		players = new Player[playerCount+1];
 		for(unsigned int i = 0;i<playerCount;++i){
-			printf("[PlayerManager]copy: %d \n",i);
 			players[i] =temp[i];
 		}
 		players[playerCount] = newPlayer;
-		
-		string name = (players[playerCount].getName());
 		playerCount++;
 		delete [] temp;
 	}
-	
-	cout << "[player count]:"<<playerCount<<name<<endl;
+	players[playerCount].id(GetFirstUnUsedId());
+	cout << "[player created addres:"<<players[playerCount].getAddres().ToString()<<endl;
+	cout << "[player count]:"<<playerCount<<endl;
 }
 
 void PlayerManager::RemovePlayer(SystemAddress addres){

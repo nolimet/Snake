@@ -1,11 +1,14 @@
 #include "Entity.h"
 
 
-Entity::Entity(void)
+Entity::Entity(int x, int y)
 {
+	x_ = x;
+	y_ = y;
 }
 
 
 Entity::~Entity(void)
 {
+
 }
