@@ -145,10 +145,10 @@ package snake.net
 				
 				while(bytes.bytesAvailable>0){
 					var messageLength:int = bytes.readInt();
-					Main.debug.print(("Length Message: " + messgaeLength) , Debug.Server_2);
+					Main.debug.print(("Length Message: " + messageLength) , Debug.Server_2);
 					
 					var messageType:int = bytes.readByte();
-					Main.debug.print(("Message Type: " + mesageType) , Debug.Server_2);
+					Main.debug.print(("Message Type: " + messageType) , Debug.Server_2);
 					
 					switch(messageType) {
 						case MessageType.PING_BACK:
@@ -219,24 +219,23 @@ package snake.net
 				playerList = new Vector.<Player>();
 				Main.debug.print(("[Player List] Length:" + listLength) , Debug.Server_2);
 				
-				var name:String;
 				var nameL:int;
 				var id:int = 0;
 				var dir:int = 0;
 				for (var j:int = 0; j < listLength; j++) 
 				{
 					//gettting name
-					name = new String();
-					id = _bytes.readInt();
+					var name:String = new String();
+					id = _bytes.readByte(); // renable when bug is fixed
 					nameL = _bytes.readInt();
 					
 					Main.debug.print("Name Length: " + nameL, Debug.Server_2);
 					
-					/*for (var i:int = 1; i < nameL; i++) 
+					for (var i:int = 0; i < nameL; i++) 
 					{
 						var newLLetter:String = String.fromCharCode(_bytes.readUnsignedByte());
 						name = name+newLLetter ;
-					}*/
+					}
 					
 					playerList.push(new Player(name,dir,id));
 					Main.debug.print(("-Player: " + name + " ID: " + id) , Debug.Server_2);
@@ -250,7 +249,7 @@ package snake.net
 			
 			public function PlayerReady(value:Boolean = false) {
 				//send bool player ready to server
-				var messageLength:int = 2;
+				var messageLength:int = 6;
 				
 				var bytes:ByteArray = new ByteArray();
 				bytes.endian = Endian.LITTLE_ENDIAN;
@@ -271,7 +270,7 @@ package snake.net
 			}
 			
 		public function AdminStart(value:Boolean = false) {
-			var messageLength:int = 1;
+			var messageLength:int = 5;
 			
 			var bytes:ByteArray = new ByteArray();
 			bytes.endian = Endian.LITTLE_ENDIAN;
