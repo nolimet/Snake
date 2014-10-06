@@ -14,7 +14,7 @@ public:
 	Player(string name = "new Player",SystemAddress addres = RakNet::UNASSIGNED_SYSTEM_ADDRESS);
 	~Player(void);
 	unsigned char	id() const{return id_;}
-	void			id(unsigned char name){name_ = name;}
+	void			id(unsigned char newId){id_ = newId;}
 	string			getName() const{return name_;}
 	void			setName(string name){name_ = name;}
 	SystemAddress	getAddres() const{return addres_;}

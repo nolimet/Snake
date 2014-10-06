@@ -112,7 +112,7 @@ void Server::SendPlayerList(){
 		string playerName = playersManager.GetPlayers()[i].getName();
 		playerStringsLength+=playerName.length();
 	}
-	int messageL = 9+(playerCount*4)+playerStringsLength;
+	int messageL = 9+(playerCount*5)+playerStringsLength;
 
 	std::vector<unsigned char> dataLenght = ByteConverter::IntToUnsignedCharArray(messageL);
 	unsigned char *message = new unsigned char[messageL];
@@ -149,6 +149,7 @@ void Server::SendPlayerList(){
 		}
 		delete [] nameInBytes;
 	}
+	
 	printf("-messageID %d-\n",messageID);
 	printf("-messageL %d-\n",messageL);
 	peer->Send((const char *)message, messageL,"127.0.0.1",true);

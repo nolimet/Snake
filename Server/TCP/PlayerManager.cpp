@@ -60,8 +60,8 @@ bool PlayerManager::GetPlayersReady(){
 }
 
 unsigned char PlayerManager::GetFirstUnUsedId(){
-	for(unsigned int i = 0;i<255;i++){
-		bool idFound;
+	for(unsigned char i = 0;i<256;i++){
+		bool idFound = false;
 		for(unsigned int j = 0;j<playerCount;j++){
 			if(players[j].id()==i){
 				break;
@@ -69,6 +69,7 @@ unsigned char PlayerManager::GetFirstUnUsedId(){
 			idFound = true;
 		}
 		if(idFound){
+			printf( "[GetFirstUnUsedId] id: %u \n",i);
 			return i;
 			break;
 		}
@@ -96,8 +97,9 @@ void PlayerManager::AddPlayer(SystemAddress addres){
 		delete [] temp;
 	}
 	players[playerCount-1].id(GetFirstUnUsedId());
-	cout << "[player created addres:"<<players[playerCount].getAddres().ToString()<<endl;
-	cout << "[player count]:"<<playerCount<<endl;
+	cout << "[new player] created addres:"<<players[playerCount-1].getAddres().ToString()<<endl;
+	printf( "[new player] created id: %u \n",players[playerCount-1].id());
+	cout << "[new player] count	:"<<playerCount<<endl;
 }
 
 void PlayerManager::RemovePlayer(SystemAddress addres){
