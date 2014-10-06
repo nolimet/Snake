@@ -28,9 +28,7 @@ package
 		private var randomX:Number;
 		private var randomY:Number;
 		private var reset:Boolean = false;
-		private var switchone:Boolean = true;		
-		private var player1press:Boolean = false;
-		private var player2press:Boolean = false;
+		private var switchone:Boolean = true;
 		
 		public function Main():void 
 		{
@@ -107,7 +105,7 @@ package
 		}
 		
 		private function Control(e:KeyboardEvent):void {
-			if(players[0].pressed == false){
+			if(players[0] != null && players[0].pressed == false){
 				if (e.keyCode == 87 && players[0].moveDir != 3) {//w
 					players[0].moveDir = 1;
 				}
@@ -123,7 +121,7 @@ package
 				players[0].pressed = true;
 			}
 			
-			if(players[1].pressed == false){
+			if(players[1] != null && players[1].pressed == false){
 				if (e.keyCode == 38 && players[1].moveDir != 3) {//up
 					players[1].moveDir = 1;
 				}
