@@ -59,6 +59,11 @@ package snake.net
 			return _instance;
 		}
 		
+		public function WriteBytes(_bytes:ByteArray) {
+			socket_.writeBytes(_bytes);
+			socket_.flush();
+		}
+		
 		public function Connect(name:String, ip:String = address):void {
 			
 			socket_.connect(ip, port);
@@ -230,8 +235,39 @@ package snake.net
 			var listLength:int 
 		}
 		
-		public function PlayerReady(status:Boolean = false) {
+		public function PlayerReady(value:Boolean = false) {
+			//send bool player ready to server
+			var messageLength:int = 2;
 			
+			var bytes:ByteArray = new ByteArray();
+			bytes.endian = Endian.LITTLE_ENDIAN;
+			
+			bytes.writeInt(messageLength);
+			bytes.writeByte(MessageType.PLAYER_READY);
+			
+			if (value)
+			{
+				bytes.writeByte(1);
+			}
+			else
+			{
+				bytes.writeByte(0);
+			}
+			
+			socket_.writeBytes(bytes);
+			socket_.flush();
 		}
+		
+	public function AdminStart(value:Boolean = false) {
+		var messageLength:int = 1;
+		
+		var bytes:ByteArray = new ByteArray();
+		bytes.endian = Endian.LITTLE_ENDIAN;
+		
+		bytes.writeInt(messageLength);
+		bytes.writeByte(MessageType.ADMIN_START);
+		
+		socket_.writeBytes(bytes);
+		socket_.flush();
 	}
 }

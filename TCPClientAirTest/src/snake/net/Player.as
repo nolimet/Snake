@@ -9,6 +9,7 @@ package snake.net
 		public var name:String;
 		public var dir:int;
 		public var id:int;
+		public var isAdmin:Boolean;
 		
 		public function Player(_name:String , _dir:int, _id:int) 
 		{
