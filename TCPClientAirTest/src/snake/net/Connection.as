@@ -154,6 +154,10 @@ package snake.net
 					case MessageType.PLAYER_LIST:
 						PlayerList(bytes);
 						break;
+						
+					case MessageType.PLAYER_SET_NEW_DIRECTION:
+						SetNewPlayerDir(bytes)
+						break;
 			   }
 			}
 		}
@@ -220,6 +224,10 @@ package snake.net
 				Main.debug.print(("-Player: " + name) , Debug.Server_2);
 				Main.eventManager.dispatchEvent(new starling.events.Event( ScreenEvents.NEW_PLAYERLIST ));
 			}
+		}
+		
+		private function SetNewPlayerDir(_bytes:ByteArray) {
+			
 		}
 	}
 }
