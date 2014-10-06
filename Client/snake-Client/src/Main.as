@@ -16,19 +16,19 @@ package
 	 
 	public class Main extends Sprite 
 	{
-		private var Player:Block;
-		private var Player2:Block;
+		private var playerAmount:int = 2;
+		private var moveTime:int = 5;
+		private var gameWidth:int = 792;
+		private var gameHeight:int = 792;
 		
 		private var pickUp:PickUp;
-		
+		private var player:Block;
+		private var players:Array = new Array();
 		private var timer:int;
-		private var moveTime:int = 5;
 		private var randomX:Number;
 		private var randomY:Number;
 		private var reset:Boolean = false;
-		private var switchone:Boolean = true;
-		private var index:int = 0;
-		
+		private var switchone:Boolean = true;		
 		private var player1press:Boolean = false;
 		private var player2press:Boolean = false;
 		
@@ -47,13 +47,16 @@ package
 		}
 		
 		private function startGame():void {
-			Player = new Block();
-			Player.DrawSnake(11, 11, 8);
-			addChild(Player);
-			
-			Player2 = new Block();
-			Player2.DrawSnake(11,55,5);
-			addChild(Player2);
+			for (var i:int = 0; i < playerAmount; i++) 
+			{
+				player = new Block();
+				randomX = Math.floor(Math.random()/2 * gameWidth / 11)*11;
+				randomY = Math.floor(Math.random() * gameHeight/11)*11;
+				player.DrawSnake(randomX, randomY, 8);
+				addChild(player);
+				player.Id = i;
+				players.push(player);
+			}
 			
 			addPickUp();
 			
@@ -65,19 +68,23 @@ package
 			timer += 1;
 			if (timer >= moveTime){
 				if (reset == false) {
-					Player.moveSnake();
-					Player2.moveSnake();
-					player1press = false;
-					player2press = false;
+					for each (var item:Block in players) 
+					{
+						item.moveSnake();
+						item.pressed = false;
+					}
 					checkColl();
 					timer = 0;
 				}
 			}
 		}
 		
-		public function Resett():void {
-			removeChild(Player);
-			removeChild(Player2);
+		public function ResetGame():void {
+			for each (var item:Block in players) 
+			{
+				removeChild(item);
+			}
+			players.splice(0,playerAmount);
 			removeChild(pickUp);
 			startGame();
 		}
@@ -85,15 +92,14 @@ package
 		private function addPickUp():void {
 			pickUp = new PickUp;
 			addChild(pickUp);
-			randomX = Math.floor(Math.random() * 72);
-			randomX *= 11;
-			randomY = Math.floor(Math.random() * 72);
-			randomY *= 11;
+			randomX = Math.floor(Math.random() * gameWidth/11)*11;
+			randomY = Math.floor(Math.random() * gameHeight/11)*11;
 			if (randomX == 0 && randomY == 0 ||
-				randomX == 792 && randomY == 0 ||
-				randomX == 0 && randomY == 792 ||
-				randomX == 792 && randomY == 792) {
-				addPickUp();
+				randomX == gameWidth && randomY == 0 ||
+				randomX == 0 && randomY == gameHeight ||
+				randomX == gameWidth && randomY == gameHeight) {
+					removeChild(pickUp);
+					addPickUp();
 			}
 			else {
 				pickUp.addPickUp(randomX, randomY);
@@ -101,77 +107,69 @@ package
 		}
 		
 		private function Control(e:KeyboardEvent):void {
-			if(player1press == false){
-				if (e.keyCode == 87 && Player.moveDir != 3) {//w
-					Player.moveDir = 1;
+			if(players[0].pressed == false){
+				if (e.keyCode == 87 && players[0].moveDir != 3) {//w
+					players[0].moveDir = 1;
 				}
-				if (e.keyCode == 68 && Player.moveDir != 4) {//d
-					Player.moveDir = 2;
+				if (e.keyCode == 68 && players[0].moveDir != 4) {//d
+					players[0].moveDir = 2;
 				}
-				if (e.keyCode == 83 && Player.moveDir != 1) {//s
-					Player.moveDir = 3;
+				if (e.keyCode == 83 && players[0].moveDir != 1) {//s
+					players[0].moveDir = 3;
 				}
-				if (e.keyCode == 65 && Player.moveDir != 2) {//a
-					Player.moveDir = 4;
+				if (e.keyCode == 65 && players[0].moveDir != 2) {//a
+					players[0].moveDir = 4;
 				}
-				player1press = true;
+				players[0].pressed = true;
 			}
 			
-			if(player2press == false){
-				if (e.keyCode == 38 && Player2.moveDir != 3) {//up
-					Player2.moveDir = 1;
+			if(players[1].pressed == false){
+				if (e.keyCode == 38 && players[1].moveDir != 3) {//up
+					players[1].moveDir = 1;
 				}
-				if (e.keyCode == 39 && Player2.moveDir != 4) {//right
-					Player2.moveDir = 2;
+				if (e.keyCode == 39 && players[1].moveDir != 4) {//right
+					players[1].moveDir = 2;
 				}
-				if (e.keyCode == 40 && Player2.moveDir != 1) {//down
-					Player2.moveDir = 3;
+				if (e.keyCode == 40 && players[1].moveDir != 1) {//down
+					players[1].moveDir = 3;
 				}
-				if (e.keyCode == 37 && Player2.moveDir != 2) {//left
-					Player2.moveDir = 4;
+				if (e.keyCode == 37 && players[1].moveDir != 2) {//left
+					players[1].moveDir = 4;
 				}
-				player2press = true;
+				players[1].pressed = true;
 			}
 		}
 		
 		private function checkColl():void {
-			if (Player.square.hitTestObject(pickUp)) {
-				removeChild(pickUp);
-				addPickUp();
-				Player.addBlock();
-			}
-			else if (Player2.square.hitTestObject(pickUp)) {
-				removeChild(pickUp);
-				addPickUp();
-				Player2.addBlock();
-			}
-			for (var i:int = 0; i < Player.squares.length; i++) {
-				if (Player2.square.hitTestObject(Player.squares[i])) {
-					trace("Player2hit");
-					Resett();
+			for (var i:int = 0; i < players.length; i++) 
+			{
+				if (players[i].square.hitTestObject(pickUp)) {
+					removeChild(pickUp);
+					addPickUp();
+					players[i].addBlock();
+					trace("Player " + i + " has picked up a block and is now " + players[i].squares.length + " blocks long");
 				}
-				if (Player.square.hitTestObject(Player.squares[i]) && i < Player.squares.length - 2) {
-					trace("Player1hitself");
-					Resett();
+				
+				for each (var item:Block in players) 
+				{
+					for (var j:int = 0; j < item.squares.length; j++) 
+					{
+						if (players[i].square.hitTestObject(item.squares[j]))
+						{
+							if (players[i].square != item.squares[j])
+							{
+								ResetGame();
+								trace("Player " + i + " hitted player " + item.Id);
+							}
+						}
+					}
 				}
-			}
-			for (var j:int = 0; j < Player2.squares.length; j++) {
-				if (Player.square.hitTestObject(Player2.squares[j])) {
-					trace("Player1hit");
-					Resett();
+
+				if (players[i].lastPos.x < 0 || players[i].lastPos.x >= gameWidth ||
+					players[i].lastPos.y < 0 || players[i].lastPos.y > gameHeight)
+					{
+					ResetGame();
 				}
-				if (Player2.square.hitTestObject(Player2.squares[j]) && j < Player2.squares.length - 2) {
-					trace("Player2hitself");
-					Resett();
-				}
-			}
-			if (Player.lastPos.x < 0 || Player.lastPos.x >= 792 ||
-			    Player.lastPos.y < 0 || Player.lastPos.y > 792) {
-				Resett();
-			}
-			if (Player2.lastPos.x < 0 || Player2.lastPos.x >= 792 ||
-			    Player2.lastPos.y < 0 || Player2.lastPos.y > 792) {
-				Resett();
 			}
 		}
 	}
