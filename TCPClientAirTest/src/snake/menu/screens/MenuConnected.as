@@ -6,7 +6,7 @@ package snake.menu.screens
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.controls.Screen;
 	import feathers.data.ListCollection;
-	import snake.net.Conection;
+	import snake.net.Connection
 	import snake.net.Player;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -19,7 +19,7 @@ package snake.menu.screens
 	{
 		private var startGroup:ButtonGroup;
 		private var playerList:List;
-		private var con:Conection;
+		private var con:Connection;
 		private var playerListCollection:ListCollection;
 		
 		private var menuConected:ListCollection = new ListCollection([
@@ -47,7 +47,7 @@ package snake.menu.screens
 		}
 		
 		override protected function initialize():void {
-			con = Conection.GetInstance();
+			con = Connection.GetInstance();
 			BuildPlayerList();
 			
 			

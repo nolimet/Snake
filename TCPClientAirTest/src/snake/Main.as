@@ -11,7 +11,7 @@ package snake {
 	import snake.menu.EventManager;
 	import snake.menu.ScreenEvents;
 	import snake.menu.screens.*;
-	import snake.net.Conection;
+	import snake.net.Connection;
 	import starling.display.Sprite;
 	import starling.events.EnterFrameEvent;
 	import starling.events.EventDispatcher;
@@ -36,7 +36,7 @@ package snake {
 		private var startGroup:ButtonGroup;
 		
 		
-		private var con:Conection;
+		private var con:Connection;
 		public static var debug:Debug;
 		
 		public static var eventManager:EventManager;
@@ -71,7 +71,7 @@ package snake {
 			this.removeEventListener(starling.events.Event.ADDED_TO_STAGE, addedToStage);
 			
 			new AeonDesktopTheme();
-			con = Conection.GetInstance();
+			con = Connection.GetInstance();
 		}
 		
 		private function OnNewPlayerList( event:starling.events.Event ):void

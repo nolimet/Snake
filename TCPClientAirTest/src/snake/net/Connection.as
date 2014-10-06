@@ -10,7 +10,7 @@ package snake.net
 	import feathers.themes.AeonDesktopTheme;
 	import flash.events.IOErrorEvent;
 	import flash.events.SecurityErrorEvent;
-	import snake.net.Conection;
+	import snake.net.Connection;
 	import starling.display.Sprite;
 	import starling.events.EnterFrameEvent;
 	import starling.text.TextField;
@@ -44,17 +44,17 @@ package snake.net
 			return socket_;
 		}
 		
-		private static var _instance:Conection = null;
+		private static var _instance:Connection = null;
 		private static function CreateKey():void { }
-		public function Conection(key:Function = null){
+		public function Connection(key:Function = null){
 			if (key != CreateKey) {
 				throw new Error("Creation of Conection without calling GetInstance is not valid");
 			}
 			createSocket();
 		}
-		public static function GetInstance():Conection {
+		public static function GetInstance():Connection {
 			if (_instance == null) {
-				_instance = new Conection(CreateKey);
+				_instance = new Connection(CreateKey);
 			}
 			return _instance;
 		}
@@ -227,6 +227,10 @@ package snake.net
 		}
 		
 		private function SetNewPlayerDir(_bytes:ByteArray) {
+			var listLength:int 
+		}
+		
+		public function PlayerReady(status:Boolean = false) {
 			
 		}
 	}
