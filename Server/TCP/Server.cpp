@@ -79,6 +79,7 @@ void Server::ExecuteMessage(MessageType messageType,int messageLength,SystemAddr
 		//set name in player list
 		playersManager.SetPlayerName(dataStr,caller);
 		SendPlayerList();
+		SendPlayerIsAdmin();
 		break;
 	case MessageType::PLAYER_SET_NEW_DIRECTION:
 
@@ -95,6 +96,7 @@ void Server::ExecuteMessage(MessageType messageType,int messageLength,SystemAddr
 		break;
 	case MessageType::ADMIN_START:
 		game = new Game();
+		SendGameStart();
 		break;
 	default:
 		printf("[Error]recieved message type not found!!!\n");
@@ -109,49 +111,70 @@ void Server::SendPlayerList(){
 	int playerCount = playersManager.GetPlayerCount();
 	int playerStringsLength = 0;
 	for (int i = 0; i < playerCount; i++){
-		string playerName = playersManager.GetPlayers()[i].getName();
-		playerStringsLength+=playerName.length();
+		playerStringsLength += playersManager.GetPlayers()[i].getName().length();
 	}
 	int messageL = 9+(playerCount*5)+playerStringsLength;
-
-	std::vector<unsigned char> dataLenght = ByteConverter::IntToUnsignedCharArray(messageL);
-	unsigned char *message = new unsigned char[messageL];
 	
-	message[0]=dataLenght.at(0);
-	message[1]=dataLenght.at(1);
-	message[2]=dataLenght.at(2);
-	message[3]=dataLenght.at(3);
+	unsigned char *message = new unsigned char[messageL];
+	ByteConverter::PushIntToUnsignedCharArray(message,0,messageL);
 	
 	message[4]=(int)(MessageType::PLAYER_LIST);
+	ByteConverter::PushIntToUnsignedCharArray(message,5,playerCount);
 
-	std::vector<unsigned char> playerListLenght = ByteConverter::IntToUnsignedCharArray(playerCount);
-	message[5]=playerListLenght.at(0);
-	message[6]=playerListLenght.at(1);
-	message[7]=playerListLenght.at(2);
-	message[8]=playerListLenght.at(3);
-
-	int messageID = 9;
+	int currentMessageL = 9;
 	for(int i = 0;i < playerCount;i++){
-		message[messageID] = playersManager.GetPlayers()[i].id();
-		messageID++;
+		message[currentMessageL] = playersManager.GetPlayers()[i].id();
+		currentMessageL++;
 		string playerName = playersManager.GetPlayers()[i].getName();
-		printf("--Player: %u Name:%s -\n",message[messageID-1],playerName.c_str());
+		printf("--Player: %u Name:%s -\n",message[currentMessageL-1],playerName.c_str());
+
 		int playerNameLenth = playerName.length();
-		std::vector<unsigned char> nameLength = ByteConverter::IntToUnsignedCharArray(playerNameLenth);
-		message[messageID]=nameLength.at(0);
-		message[messageID+1]=nameLength.at(1);
-		message[messageID+2]=nameLength.at(2);
-		message[messageID+3]=nameLength.at(3);
-		messageID+=4;
+		ByteConverter::PushIntToUnsignedCharArray(message,currentMessageL,playerNameLenth);
+		currentMessageL+=4;
+
 		unsigned char *nameInBytes = ByteConverter::StringToUnsignedChar(playerName);
 		for(int j = 0;j < playerNameLenth;j++){
-			message[messageID]=nameInBytes[j];
-			messageID++;
+			message[currentMessageL]=nameInBytes[j];
+			currentMessageL++;
 		}
 		delete [] nameInBytes;
 	}
 	
-	printf("-messageID %d-\n",messageID);
+	printf("-currentMessageL %d-\n",currentMessageL);
 	printf("-messageL %d-\n",messageL);
 	peer->Send((const char *)message, messageL,"127.0.0.1",true);
+	delete [] message;
+}
+
+
+void Server::SendPlayerIsAdmin(void){
+	printf("[--SendPlayerIsAdmin--]");
+	unsigned char message[6];
+	ByteConverter::PushIntToUnsignedCharArray(message,0,6);
+	message[4]=(unsigned char)(MessageType::PLAYER_IS_ADMIN);
+	message[5]=(playersManager.GetFirstUnUsedId());
+	peer->Send((const char *)message, 6,"127.0.0.1",true);
+	printf("\n");
+}
+
+
+void Server::SendPlayerPositioinList(void){
+}
+
+
+void Server::SendServerError(void){
+}
+
+
+void Server::SendGameStart(void){
+	printf("[--SendGameStart--]");
+	unsigned char message[5];
+	ByteConverter::PushIntToUnsignedCharArray(message,0,5);
+	message[4]=(unsigned char)(MessageType::GAME_START);
+	peer->Send((const char *)message, 6,"127.0.0.1",true);
+	printf("\n");
+}
+
+
+void Server::SendPlayerListUpdate(void){
 }

@@ -23,5 +23,6 @@ public:
 
 	Player* GetPlayers ()const{return players;};
 	int GetPlayerCount ()const{return playerCount;};
+	unsigned char CurrentAdminId ();
 };
 

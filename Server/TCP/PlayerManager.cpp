@@ -76,6 +76,16 @@ unsigned char PlayerManager::GetFirstUnUsedId(){
 	}
 }
 
+unsigned char PlayerManager::CurrentAdminId(){
+	int lowestId = 256;
+	for(unsigned int j = 0;j<playerCount;j++){
+		if(players[j].id()<lowestId){
+			lowestId = players[j].id();
+		}
+	}
+	return lowestId;
+}
+
 void PlayerManager::AddPlayer(SystemAddress addres){
 	printf("[--PlayerManager--]Add Player \n");
 	Player newPlayer = Player("new Player",addres);

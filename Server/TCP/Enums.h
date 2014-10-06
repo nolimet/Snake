@@ -14,6 +14,8 @@ enum class MessageType {
 	PLAYER_DIRECTION_LIST = 101,
 	PLAYER_POSITION_LIST = 102,
 	PLAYER_IS_ADMIN = 103,
-	SERVER_ERROR = 104
+	SERVER_ERROR = 104,
+	PLAYER_LIST_UPDATE = 105,
+	GAME_START = 106
 };
 enum class KeyCode { Enter = 13, S = 115, C = 99 };
