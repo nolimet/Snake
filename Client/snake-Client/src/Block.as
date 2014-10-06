@@ -16,9 +16,12 @@ package
 	 
 	public class Block extends Sprite
 	{
+		public var Id:int;
+		
 		public var square:Sprite;
 		public var squares:Array = new Array();
 		public var lastPos:Vector3D;
+		public var pressed:Boolean = false;
 		
 		public var moveDir:int = 2;
 		//1 = up
