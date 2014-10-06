@@ -28,7 +28,7 @@ Player PlayerManager::GetPlayer(SystemAddress addres){
 	}
 }
 string PlayerManager::GetPlayerName(SystemAddress addres){
-	GetPlayer(addres).getName();
+	return GetPlayer(addres).getName();
 }
 
 void PlayerManager::SetPlayerName(string name,SystemAddress addres){
@@ -47,7 +47,7 @@ void PlayerManager::SetPlayerId(unsigned char id,SystemAddress addres){
 }
 
 bool PlayerManager::GetPlayerReady(SystemAddress addres){
-	GetPlayer(addres).ready();
+	return GetPlayer(addres).ready();
 }
 
 bool PlayerManager::GetPlayersReady(){
