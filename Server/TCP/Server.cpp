@@ -135,6 +135,7 @@ void Server::SendPlayerList(){
 		message[messageID] = playersManager.GetPlayers()[i].id();
 		messageID++;
 		string playerName = playersManager.GetPlayers()[i].getName();
+		printf("--Player: %u Name:%s -\n",message[messageID-1],playerName.c_str());
 		int playerNameLenth = playerName.length();
 		std::vector<unsigned char> nameLength = ByteConverter::IntToUnsignedCharArray(playerNameLenth);
 		message[messageID]=nameLength.at(0);

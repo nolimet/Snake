@@ -20,34 +20,34 @@ PlayerManager::~PlayerManager(void)
 {
 }
 
-Player PlayerManager::GetPlayer(SystemAddress addres){
+Player * PlayerManager::GetPlayer(SystemAddress addres){
 	for(unsigned int i = 0;i<playerCount;i++){
 		if(players[i].getAddres()==addres){
-			return (players[i]);
+			return (&players[i]);
 		}
 	}
 }
 string PlayerManager::GetPlayerName(SystemAddress addres){
-	return GetPlayer(addres).getName();
+	return GetPlayer(addres)->getName();
 }
 
 void PlayerManager::SetPlayerName(string name,SystemAddress addres){
-	GetPlayer(addres).setName(name);
+	GetPlayer(addres)->setName(name);
 }
 
 void PlayerManager::SetPlayerReady(bool ready,SystemAddress addres){
-	GetPlayer(addres).ready(ready);
+	GetPlayer(addres)->ready(ready);
 }
 
 unsigned char PlayerManager::GetPlayerId(SystemAddress addres){
-	return GetPlayer(addres).id();
+	return GetPlayer(addres)->id();
 }
 void PlayerManager::SetPlayerId(unsigned char id,SystemAddress addres){
-	GetPlayer(addres).id(id);
+	GetPlayer(addres)->id(id);
 }
 
 bool PlayerManager::GetPlayerReady(SystemAddress addres){
-	return GetPlayer(addres).ready();
+	return GetPlayer(addres)->ready();
 }
 
 bool PlayerManager::GetPlayersReady(){

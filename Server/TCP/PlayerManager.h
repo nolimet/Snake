@@ -6,7 +6,7 @@ class PlayerManager
 private:
 	Player *players;
 	int playerCount;
-	Player GetPlayer(SystemAddress addres);
+	Player * GetPlayer(SystemAddress addres);
 public:
 	PlayerManager(void);
 	~PlayerManager(void);
