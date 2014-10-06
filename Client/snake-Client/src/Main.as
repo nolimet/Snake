@@ -12,12 +12,12 @@ package
 	 * @author Tom Verkerk
 	 */
 		
-	[SWF(backgroundcolor = 0x000000, width = "792", height = "792", frameRate = "30")]
+	[SWF(width = "792", height = "792", frameRate = "30")]
 	 
 	public class Main extends Sprite 
 	{
 		private var playerAmount:int = 2;
-		private var moveTime:int = 5;
+		private var moveTime:int = 3;
 		private var gameWidth:int = 792;
 		private var gameHeight:int = 792;
 		
@@ -105,36 +105,42 @@ package
 		}
 		
 		private function Control(e:KeyboardEvent):void {
-			if(players[0] != null && players[0].pressed == false){
+			if(players[0] != null/* && players[0].pressed == false*/){
 				if (e.keyCode == 87 && players[0].moveDir != 3) {//w
 					players[0].moveDir = 1;
+					//players[0].pressed = true;
 				}
 				if (e.keyCode == 68 && players[0].moveDir != 4) {//d
 					players[0].moveDir = 2;
+					//players[0].pressed = true;
 				}
 				if (e.keyCode == 83 && players[0].moveDir != 1) {//s
 					players[0].moveDir = 3;
+					//players[0].pressed = true;
 				}
 				if (e.keyCode == 65 && players[0].moveDir != 2) {//a
 					players[0].moveDir = 4;
+					//players[0].pressed = true;
 				}
-				players[0].pressed = true;
 			}
 			
-			if(players[1] != null && players[1].pressed == false){
+			if(players[1] != null/* && players[1].pressed == false*/){
 				if (e.keyCode == 38 && players[1].moveDir != 3) {//up
 					players[1].moveDir = 1;
+					//players[1].pressed = true;
 				}
 				if (e.keyCode == 39 && players[1].moveDir != 4) {//right
 					players[1].moveDir = 2;
+					//players[1].pressed = true;
 				}
 				if (e.keyCode == 40 && players[1].moveDir != 1) {//down
 					players[1].moveDir = 3;
+					//players[1].pressed = true;
 				}
 				if (e.keyCode == 37 && players[1].moveDir != 2) {//left
 					players[1].moveDir = 4;
+					//players[1].pressed = true;
 				}
-				players[1].pressed = true;
 			}
 		}
 		
@@ -152,6 +158,7 @@ package
 				{
 					for (var j:int = 0; j < item.squares.length; j++) 
 					{
+						//trace(item.squares);
 						if (players[i].square.hitTestObject(item.squares[j]))
 						{
 							if (players[i].square != item.squares[j])
@@ -162,7 +169,6 @@ package
 						}
 					}
 				}
-
 				if (players[i].lastPos.x < 0 || players[i].lastPos.x >= gameWidth ||
 					players[i].lastPos.y < 0 || players[i].lastPos.y > gameHeight)
 					{
