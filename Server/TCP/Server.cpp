@@ -207,7 +207,7 @@ void Server::SendPlayerID(SystemAddress addres){
 	printf("[--SendPlayerIsAdmin--]");
 	unsigned char message[6];
 	ByteConverter::PushIntToUnsignedCharArray(message,0,6);
-	message[4]=(unsigned char)(MessageType::PLAYER_IS_ADMIN);
+	message[4]=(unsigned char)(MessageType::PLAYER_SET_ID);
 	message[5]=(playersManager.GetPlayer(addres)->id());
 	peer->Send((const char *)message, 6,addres,true);
 	printf("\n");
