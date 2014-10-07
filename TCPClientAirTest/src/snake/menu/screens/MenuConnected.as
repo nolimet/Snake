@@ -22,24 +22,47 @@ package snake.menu.screens
 		private var con:Connection;
 		private var playerListCollection:ListCollection;
 		
-		private var menuConected:ListCollection = new ListCollection([
-			{ label: "Ping", triggered: OnButtonPing },
-			{ label: "Play", triggered: OnButtonPlay },
-			{ label: "Disconnect", triggered: OnButtonDisconnect },
-		]);
-		
+		private var menuConected:ListCollection ;
 		
 		public function MenuConnected() 
 		{
-			
+			con = Connection.GetInstance();
+			if (con.playerSelf.isAdmin)
+			{
+				menuConected = new ListCollection([
+			{ label: "Ping", triggered: OnButtonPing },
+			{ label: "Start Game", triggered: OnButtonPlay },
+			{ label: "Ready", triggered: OnButtonReady },
+			{ label: "Disconnect", triggered: OnButtonDisconnect }
+			]);
+			}
+			else {
+				menuConected = new ListCollection([
+			{ label: "Ping", triggered: OnButtonPing },
+			{ label: "Ready", triggered: OnButtonReady },
+			{ label: "Disconnect", triggered: OnButtonDisconnect }]);
+			}
 		}
 		
 		override protected function draw():void {
 			var items:Array = [];
+			var player:Player;
+			var showingTxt:String;
+			
 			for(var i:int = 0; i < con.playerList.length; i++)
 			{
-				var item:Object = {text: con.playerList[i].name};
+				player = con.playerList[i];
+				showingTxt = player.name;
+				
+				if (player.isReady){
+					showingTxt += "(Ready)";
+				}
+				else {
+					showingTxt += "(Not Ready)";
+				}
+				var item:Object = {text: showingTxt};
 				items[i] = item;
+				//items.push(item);
 			}
 			items.fixed = true;
 			
@@ -97,6 +120,9 @@ package snake.menu.screens
 		};
 		private function OnButtonPlay(e:Event):void { 		dispatchEventWith( ScreenEvents.PLAY ) };
 		private function OnButtonDisconnect(e:Event):void {	dispatchEventWith( ScreenEvents.DISCONNECT ) };
+		private function OnButtonReady(e:Event):void {	
+			con.PlayerReady(!con.playerSelf.isReady);
+		}
 	}
 
 }
