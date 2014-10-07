@@ -1,6 +1,7 @@
 
 package snake.net 
 {
+	import flash.accessibility.AccessibilityProperties;
 	import flash.events.OutputProgressEvent;
 	import snake.menu.ScreenEvents;
 	import snake.utils.debug.Debug;
@@ -43,6 +44,8 @@ package snake.net
 			public var playerSelf:Player = new Player("", -1, -1);
 			
 			public var idAdmin:int = -1;
+			
+			public var GameStart:Boolean;
 			
 			public function get socket():Socket {
 				return socket_;
@@ -182,6 +185,18 @@ package snake.net
 						case MessageType.PLAYER_SET_ID:
 							playerSelf.id = bytes.readByte();
 							break;
+							
+						case MessageType.PLAYER_LIST_UPDATE:
+							PlayerListUpdate(bytes);
+							break;
+							
+						case MessageType.GAME_START:
+							GameStart = true;
+							break;
+							
+						case MessageType.SERVER_ERROR:
+							ServerError(bytes);
+							break;
 				   }
 				}
 			}
@@ -213,6 +228,7 @@ package snake.net
 				messageData.endian = Endian.LITTLE_ENDIAN;
 				
 				var playerName:String = name;
+				playerSelf.name = name;
 				
 				var messageL:int = 5+playerName.length;
 				messageData.writeInt(messageL);
@@ -284,6 +300,32 @@ package snake.net
 				}
 			}
 			
+			private function PlayerListUpdate(_bytes:ByteArray):void {
+				var listLength:int = _bytes.readInt();
+				var data:Vector.<Object> = new Vector.<Object>();
+				
+				var obj:Object;
+				for (var i:int = 0; i < listLength; i++) 
+				{
+					obj = new Object();
+					
+					obj.id = _bytes.readByte();
+					obj.ready = _bytes.readBoolean();
+					
+					data.push(obj);
+				}
+				
+				for (var j:int = 0; j < data.length; j++) 
+				{
+					for (var k:int = 0; k < playerList.length; k++) 
+					{
+						if (data[j].id == playerList[k].id) {
+							playerList[k].isReady = data[j].ready;
+						}
+					}
+				}
+			}
+			
 			private function PlayerIsAdmin(_bytes:ByteArray):void {
 				idAdmin = _bytes.readByte();
 				if (idAdmin == playerSelf.id){
@@ -291,6 +333,15 @@ package snake.net
 				}
 			}
 			
+			private function ServerError(_bytes:ByteArray):void {
+				var stringlength:int = _bytes.readInt();
+				var msg:String = new String();
+				
+				for (var i:int = 0; i < stringlength; i++) 
+				{
+					msg += String.fromCharCode(_bytes.readUnsignedByte);
+				}
+			}
 			//sending to the server
 			public function SetNewPlayerDir(_bytes:ByteArray):void {
 				var dir:int = _bytes.readByte();
@@ -299,6 +350,9 @@ package snake.net
 			
 			public function PlayerReady(value:Boolean = false):void {
 				//send bool player ready to server
+				
+				playerSelf.isReady = value;
+				
 				var messageLength:int = 6;
 				
 				var bytes:ByteArray = new ByteArray();
