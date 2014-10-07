@@ -51,7 +51,11 @@ package snake.menu.screens
 			
 			for(var i:int = 0; i < con.playerList.length; i++)
 			{
+				
 				player = con.playerList[i];
+				if (player.id == con.playerSelf.id) {
+					player = con.playerSelf;
+				}
 				showingTxt = player.name;
 				
 				if (player.isReady){
