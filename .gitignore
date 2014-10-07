@@ -185,6 +185,6 @@ Server/UpgradeLog*.htm
 # Microsoft Fakes
 Server/FakesAssemblies/
 
-#*.bat
+*.bat
 *.as3proj
 *.swf
