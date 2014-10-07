@@ -22,5 +22,6 @@ public:
 	void SendServerError(void);
 	void SendGameStart(void);
 	void SendPlayerListUpdate(void);
+	void SendPlayerID(SystemAddress addres);
 };
 

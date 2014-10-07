@@ -79,6 +79,7 @@ void Server::ExecuteMessage(MessageType messageType,int messageLength,SystemAddr
 		//set name in player list
 		playersManager.SetPlayerName(dataStr,caller);
 		SendPlayerList();
+		SendPlayerID(caller);
 		SendPlayerIsAdmin();
 		break;
 	case MessageType::PLAYER_SET_NEW_DIRECTION:
@@ -177,4 +178,14 @@ void Server::SendGameStart(void){
 
 
 void Server::SendPlayerListUpdate(void){
+}
+
+void Server::SendPlayerID(SystemAddress addres){
+	printf("[--SendPlayerIsAdmin--]");
+	unsigned char message[6];
+	ByteConverter::PushIntToUnsignedCharArray(message,0,6);
+	message[4]=(unsigned char)(MessageType::PLAYER_IS_ADMIN);
+	message[5]=(playersManager.GetPlayer(addres)->id());
+	peer->Send((const char *)message, 6,addres,true);
+	printf("\n");
 }
