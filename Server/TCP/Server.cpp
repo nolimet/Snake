@@ -94,6 +94,7 @@ void Server::ExecuteMessage(MessageType messageType,int messageLength,SystemAddr
 		}else{
 			printf("[Error]PLAYER_READY WHY NO BOOL?");
 		}
+		SendPlayerListUpdate();
 		break;
 	case MessageType::ADMIN_START:
 		game = new Game();
@@ -178,6 +179,28 @@ void Server::SendGameStart(void){
 
 
 void Server::SendPlayerListUpdate(void){
+	printf("-Send Player List-\n");
+	
+	int playerCount = playersManager.GetPlayerCount();
+	int messageL = 9+(playerCount*2);
+	
+	unsigned char *message = new unsigned char[messageL];
+	ByteConverter::PushIntToUnsignedCharArray(message,0,messageL);
+	
+	message[4]=(int)(MessageType::PLAYER_LIST_UPDATE);
+	ByteConverter::PushIntToUnsignedCharArray(message,5,playerCount);
+
+	int currentMessageL = 9;
+	for(int i = 0;i < playerCount;i++){
+		message[currentMessageL] = playersManager.GetPlayers()[i].id();
+		message[currentMessageL+1] = playersManager.GetPlayers()[i].ready();
+		currentMessageL+=2;
+	}
+	
+	printf("-currentMessageL %d-\n",currentMessageL);
+	printf("-messageL %d-\n",messageL);
+	peer->Send((const char *)message, messageL,"127.0.0.1",true);
+	delete [] message;
 }
 
 void Server::SendPlayerID(SystemAddress addres){
