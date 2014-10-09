@@ -6,6 +6,8 @@ package snake.menu.screens
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.controls.Screen;
 	import feathers.data.ListCollection;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import snake.net.Connection
 	import snake.net.Player;
 	import starling.display.Sprite;
@@ -24,9 +26,13 @@ package snake.menu.screens
 		
 		private var menuConected:ListCollection ;
 		
+		private var UIupdaterTi:Timer;
+		private var UIInitTi:Timer;
+		
 		public function MenuConnected() 
-		{
+		{	
 			con = Connection.GetInstance();
+			
 			if (con.playerSelf.isAdmin)
 			{
 				menuConected = new ListCollection([
@@ -38,13 +44,22 @@ package snake.menu.screens
 			}
 			else {
 				menuConected = new ListCollection([
-			{ label: "Ping", triggered: OnButtonPing },
-			{ label: "Ready", triggered: OnButtonReady },
-			{ label: "Disconnect", triggered: OnButtonDisconnect }]);
+				{ label: "Ping", triggered: OnButtonPing },
+				{ label: "Ready", triggered: OnButtonReady },
+				{ label: "Disconnect", triggered: OnButtonDisconnect }]);
 			}
+			
+			UIInitTi = new Timer(150, 1);
+			UIInitTi.addEventListener(TimerEvent.TIMER, UIinit, false, 0, true);
+			UIupdaterTi = new Timer(200, 0);
+			UIupdaterTi.addEventListener(TimerEvent.TIMER, UIupdater, false, 0, true);
+			
+			UIInitTi.start();
+			UIupdaterTi.start();
 		}
 		
-		override protected function draw():void {
+		private function UIupdater(e:TimerEvent):void 
+		{
 			var items:Array = [];
 			var player:Player;
 			var showingTxt:String;
@@ -68,9 +83,20 @@ package snake.menu.screens
 				items[i] = item;
 				//items.push(item);
 			}
-			items.fixed = true;
-			
+		//	items.fixed = true;
+			//trace(showingTxt);
 			playerList.dataProvider = new ListCollection(items);
+		}
+		
+		private function UIinit(e:TimerEvent):void 
+		{
+
+		}
+		
+		
+		
+		override protected function draw():void {
+
 		}
 		
 		override protected function initialize():void {
