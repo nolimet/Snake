@@ -13,6 +13,7 @@ package snake.menu.screens
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import snake.menu.ScreenEvents;
+	import snake.Main
 	/**
 	 * ...
 	 * @author Kit van de Bunt
@@ -26,39 +27,14 @@ package snake.menu.screens
 		
 		private var menuConected:ListCollection ;
 		
-		private var UIupdaterTi:Timer;
-		private var UIInitTi:Timer;
-		
 		public function MenuConnected() 
 		{	
 			con = Connection.GetInstance();
-			
-			if (con.playerSelf.isAdmin)
-			{
-				menuConected = new ListCollection([
-			{ label: "Ping", triggered: OnButtonPing },
-			{ label: "Start Game", triggered: OnButtonPlay },
-			{ label: "Ready", triggered: OnButtonReady },
-			{ label: "Disconnect", triggered: OnButtonDisconnect }
-			]);
-			}
-			else {
-				menuConected = new ListCollection([
-				{ label: "Ping", triggered: OnButtonPing },
-				{ label: "Ready", triggered: OnButtonReady },
-				{ label: "Disconnect", triggered: OnButtonDisconnect }]);
-			}
-			
-			UIInitTi = new Timer(150, 1);
-			UIInitTi.addEventListener(TimerEvent.TIMER, UIinit, false, 0, true);
-			UIupdaterTi = new Timer(200, 0);
-			UIupdaterTi.addEventListener(TimerEvent.TIMER, UIupdater, false, 0, true);
-			
-			UIInitTi.start();
-			UIupdaterTi.start();
+			UIButtons();
+			UIupdater();
 		}
 		
-		private function UIupdater(e:TimerEvent):void 
+		private function UIupdater():void 
 		{
 			var items:Array = [];
 			var player:Player;
@@ -88,9 +64,24 @@ package snake.menu.screens
 			playerList.dataProvider = new ListCollection(items);
 		}
 		
-		private function UIinit(e:TimerEvent):void 
+		private function UIButtons():void 
 		{
-
+			if (con.playerSelf.isAdmin)
+			{
+				menuConected = new ListCollection([
+			{ label: "Ping", triggered: OnButtonPing },
+			{ label: "Start Game", triggered: OnButtonPlay },
+			{ label: "Ready", triggered: OnButtonReady },
+			{ label: "Disconnect", triggered: OnButtonDisconnect }
+			]);
+			}
+			else {
+				menuConected = new ListCollection([
+				{ label: "Ping", triggered: OnButtonPing },
+				{ label: "Ready", triggered: OnButtonReady },
+				{ label: "Disconnect", triggered: OnButtonDisconnect }]);
+			}
+			Main.eventManager.dispatchEvent(new starling.events.Event( ScreenEvents.NEW_PLAYERLIST ));
 		}
 		
 		
@@ -112,6 +103,8 @@ package snake.menu.screens
 		}
 		
 		private function BuildPlayerList():void {
+			UIupdater();
+			UIButtons();
 			if (playerList != null) {
 				removeChild(playerList);
 			}
@@ -136,7 +129,6 @@ package snake.menu.screens
 			{
 				var renderer:DefaultListItemRenderer = new DefaultListItemRenderer();
 				renderer.isQuickHitAreaEnabled = true;
-
 				renderer.labelField = "text";
 				return renderer;
 			};

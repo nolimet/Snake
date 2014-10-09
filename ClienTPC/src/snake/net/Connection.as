@@ -324,6 +324,7 @@ package snake.net
 						}
 					}
 				}
+				Main.eventManager.dispatchEvent(new starling.events.Event( ScreenEvents.NEW_PLAYERLIST ));
 			}
 			
 			private function PlayerIsAdmin(_bytes:ByteArray):void {
