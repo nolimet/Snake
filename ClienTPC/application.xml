@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <application xmlns="http://ns.adobe.com/air/application/14.0">
 	
-	<id>TCPClientAir</id> 
+	<id>ClienTPC</id> 
 	<versionNumber>1.0</versionNumber> 
-	<filename>TCPClientAir</filename> 
+	<filename>ClienTPC</filename> 
 	
-	<name>TCPClientAir</name> 
+	<name>ClienTPC</name> 
 	<description></description> 
 	<copyright></copyright> 
 	
 	<initialWindow> 
-		<title>TCPClientAir</title> 
-		<content>TCPClientAir.swf</content> 
+		<title>ClienTPC</title> 
+		<content>ClienTPC.swf</content> 
 		<systemChrome>standard</systemChrome> 
 		<transparent>false</transparent> 
 		<visible>true</visible> 
