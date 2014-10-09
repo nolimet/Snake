@@ -29,9 +29,9 @@ package snake.menu.screens
 		
 		public function MenuConnected() 
 		{	
-			con = Connection.GetInstance();
-			UIButtons();
-			UIupdater();
+			
+			
+			//UIupdater();
 		}
 		
 		private function UIupdater():void 
@@ -43,10 +43,10 @@ package snake.menu.screens
 			for(var i:int = 0; i < con.playerList.length; i++)
 			{
 				
-				player = con.playerList[i];
-				if (player.id == con.playerSelf.id) {
+				//player = con.playerList[i];
+				//if (player.id == con.playerSelf.id) {
 					player = con.playerSelf;
-				}
+				//}
 				showingTxt = player.name;
 				
 				if (player.isReady){
@@ -56,16 +56,18 @@ package snake.menu.screens
 					showingTxt += "(Not Ready)";
 				}
 				var item:Object = {text: showingTxt};
-				items[i] = item;
-				//items.push(item);
+				//items[i] = item;
+				items.push(item);
 			}
-		//	items.fixed = true;
+			items.fixed = true;
 			//trace(showingTxt);
+			trace(items);
 			playerList.dataProvider = new ListCollection(items);
 		}
 		
 		private function UIButtons():void 
 		{
+			con = Connection.GetInstance();
 			if (con.playerSelf.isAdmin)
 			{
 				menuConected = new ListCollection([
@@ -81,7 +83,7 @@ package snake.menu.screens
 				{ label: "Ready", triggered: OnButtonReady },
 				{ label: "Disconnect", triggered: OnButtonDisconnect }]);
 			}
-			Main.eventManager.dispatchEvent(new starling.events.Event( ScreenEvents.NEW_PLAYERLIST ));
+			//Main.eventManager.dispatchEvent(new starling.events.Event( ScreenEvents.NEW_PLAYERLIST ));
 		}
 		
 		
@@ -103,7 +105,7 @@ package snake.menu.screens
 		}
 		
 		private function BuildPlayerList():void {
-			UIupdater();
+		//	UIupdater();
 			UIButtons();
 			if (playerList != null) {
 				removeChild(playerList);
