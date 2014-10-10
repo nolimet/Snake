@@ -72,7 +72,7 @@ package snake.game
 					for each (var item:Block in players) 
 					{
 						item.moveSnake();
-						item.pressed = false;
+						//item.pressed = false;
 					}
 					checkColl();
 					timer = 0;
