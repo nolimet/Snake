@@ -17,5 +17,11 @@ public:
 	virtual void ExecuteMessage(MessageType messageType,int messageLength,SystemAddress caller)override;
 	void AddClient();
 	void SendPlayerList();
+	void SendPlayerIsAdmin(void);
+	void SendPlayerPositioinList(void);
+	void SendServerError(void);
+	void SendGameStart(void);
+	void SendPlayerListUpdate(void);
+	void SendPlayerID(SystemAddress addres);
 };
 

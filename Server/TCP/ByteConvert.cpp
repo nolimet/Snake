@@ -43,4 +43,12 @@ namespace ByteConverter{
 		}
 		return ss;
 	}
+
+	void PushIntToUnsignedCharArray(unsigned char* chars,int currentSize, int integer){
+		std::vector<unsigned char> splitInt = IntToUnsignedCharArray(integer);
+		chars[currentSize]=splitInt.at(0);
+		chars[currentSize+1]=splitInt.at(1);
+		chars[currentSize+2]=splitInt.at(2);
+		chars[currentSize+3]=splitInt.at(3);
+	}
 }

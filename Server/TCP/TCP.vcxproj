@@ -380,6 +380,7 @@
     <None Include="..\..\RakNet\Source\RakNet_vc8.vcproj" />
     <None Include="..\..\RakNet\Source\RakNet_vc9.vcproj" />
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

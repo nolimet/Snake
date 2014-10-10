@@ -22,6 +22,8 @@ namespace ByteConverter{
 	unsigned char* StringToUnsignedChar(std::string str);
 
 	std::string UnsignedCharToStringAt(int at,unsigned char* base, int len);
+
+	void PushIntToUnsignedCharArray(unsigned char* chars,int currentSize, int integer);
 }
 
 #endif

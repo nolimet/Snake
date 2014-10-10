@@ -6,11 +6,14 @@ package snake.menu.screens
 	import feathers.controls.renderers.IListItemRenderer;
 	import feathers.controls.Screen;
 	import feathers.data.ListCollection;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import snake.net.Connection
 	import snake.net.Player;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import snake.menu.ScreenEvents;
+	import snake.Main
 	/**
 	 * ...
 	 * @author Kit van de Bunt
@@ -22,28 +25,71 @@ package snake.menu.screens
 		private var con:Connection;
 		private var playerListCollection:ListCollection;
 		
-		private var menuConected:ListCollection = new ListCollection([
-			{ label: "Ping", triggered: OnButtonPing },
-			{ label: "Play", triggered: OnButtonPlay },
-			{ label: "Disconnect", triggered: OnButtonDisconnect },
-		]);
-		
+		private var menuConected:ListCollection ;
 		
 		public function MenuConnected() 
-		{
+		{	
 			
+			
+			//UIupdater();
 		}
 		
-		override protected function draw():void {
+		private function UIupdater():void 
+		{
 			var items:Array = [];
+			var player:Player;
+			var showingTxt:String;
+			
 			for(var i:int = 0; i < con.playerList.length; i++)
 			{
-				var item:Object = {text: con.playerList[i].name};
-				items[i] = item;
+				
+				//player = con.playerList[i];
+				//if (player.id == con.playerSelf.id) {
+					player = con.playerSelf;
+				//}
+				showingTxt = player.name;
+				
+				if (player.isReady){
+					showingTxt += "(Ready)";
+				}
+				else {
+					showingTxt += "(Not Ready)";
+				}
+				var item:Object = {text: showingTxt};
+				//items[i] = item;
+				items.push(item);
 			}
 			items.fixed = true;
-			
+			//trace(showingTxt);
+			trace(items);
 			playerList.dataProvider = new ListCollection(items);
+		}
+		
+		private function UIButtons():void 
+		{
+			con = Connection.GetInstance();
+			if (con.playerSelf.isAdmin)
+			{
+				menuConected = new ListCollection([
+			{ label: "Ping", triggered: OnButtonPing },
+			{ label: "Start Game", triggered: OnButtonPlay },
+			{ label: "Ready", triggered: OnButtonReady },
+			{ label: "Disconnect", triggered: OnButtonDisconnect }
+			]);
+			}
+			else {
+				menuConected = new ListCollection([
+				{ label: "Ping", triggered: OnButtonPing },
+				{ label: "Ready", triggered: OnButtonReady },
+				{ label: "Disconnect", triggered: OnButtonDisconnect }]);
+			}
+			//Main.eventManager.dispatchEvent(new starling.events.Event( ScreenEvents.NEW_PLAYERLIST ));
+		}
+		
+		
+		
+		override protected function draw():void {
+
 		}
 		
 		override protected function initialize():void {
@@ -59,6 +105,8 @@ package snake.menu.screens
 		}
 		
 		private function BuildPlayerList():void {
+		//	UIupdater();
+			UIButtons();
 			if (playerList != null) {
 				removeChild(playerList);
 			}
@@ -83,7 +131,6 @@ package snake.menu.screens
 			{
 				var renderer:DefaultListItemRenderer = new DefaultListItemRenderer();
 				renderer.isQuickHitAreaEnabled = true;
-
 				renderer.labelField = "text";
 				return renderer;
 			};
@@ -97,6 +144,9 @@ package snake.menu.screens
 		};
 		private function OnButtonPlay(e:Event):void { 		dispatchEventWith( ScreenEvents.PLAY ) };
 		private function OnButtonDisconnect(e:Event):void {	dispatchEventWith( ScreenEvents.DISCONNECT ) };
+		private function OnButtonReady(e:Event):void {	
+			con.PlayerReady(!con.playerSelf.isReady);
+		}
 	}
 
 }

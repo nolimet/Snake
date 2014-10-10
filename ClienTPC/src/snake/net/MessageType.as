@@ -23,6 +23,8 @@ package snake.net {
 		public static const PLAYER_IS_ADMIN:int = 103;
 		public static const SERVER_ERROR:int = 104;
 		public static const PLAYER_LIST_UPDATE:int = 105;
+		public static const GAME_START:int = 106;
+		public static const PLAYER_SET_ID:int = 107;
 		
 	}
 }
