@@ -17,6 +17,8 @@ package snake.game
 	 
 	public class Block extends Sprite
 	{
+		public var Id:int;
+		
 		public var square:Shape;
 		public var squares:Array = new Array();
 		public var lastPos:Vector3D;

@@ -24,6 +24,7 @@ package
 		private var pickUp:PickUp;
 		private var player:Block;
 		private var players:Array = new Array();
+		private var pickUps:Array = new Array();
 		private var timer:int;
 		private var randomX:Number;
 		private var randomY:Number;
@@ -56,7 +57,7 @@ package
 				players.push(player);
 			}
 			
-			addPickUp();
+			addPickUp(4);
 			
 			stage.addEventListener(Event.ENTER_FRAME, Update);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, Control);
@@ -75,19 +76,29 @@ package
 					timer = 0;
 				}
 			}
+			if (pickUps.length == 0)
+			{
+				addPickUp(4);
+			}
 		}
 		
 		public function ResetGame():void {
-			for each (var item:Block in players) 
+			for each (var player:Block in players) 
 			{
-				removeChild(item);
+				removeChild(player);
+			}
+			for each (var pickup:PickUp in pickUps) 
+			{
+				removeChild(pickup);
 			}
 			players.splice(0,playerAmount);
-			removeChild(pickUp);
+			pickUps.splice(0, pickUps.length);
 			startGame();
 		}
 		
-		private function addPickUp():void {
+		private function addPickUp(Amount:int):void {
+			for (var i:int = 0; i < Amount; i++) 
+			{
 			pickUp = new PickUp;
 			addChild(pickUp);
 			randomX = Math.floor(Math.random() * gameWidth/11)*11;
@@ -97,12 +108,14 @@ package
 				randomX == 0 && randomY == gameHeight ||
 				randomX == gameWidth && randomY == gameHeight) {
 					removeChild(pickUp);
-					addPickUp();
+					Amount -= 1;
 			}
 			else {
 				pickUp.addPickUp(randomX, randomY);
+				pickUps.push(pickUp);
 			}
 		}
+	}
 		
 		private function Control(e:KeyboardEvent):void {
 			if(players[0] != null/* && players[0].pressed == false*/){
@@ -147,19 +160,20 @@ package
 		private function checkColl():void {
 			for (var i:int = 0; i < players.length; i++) 
 			{
-				if (players[i].square.hitTestObject(pickUp)) {
-					removeChild(pickUp);
-					addPickUp();
+				for (var k:int = 0; k < pickUps.length; k++) 
+				{
+					if (intersectsTest(players[i].square,pickUps[k])) {
+					removeChild(pickUps[k]);
+					pickUps.splice(k, 1);
 					players[i].addBlock();
 					trace("Player " + i + " has picked up a block and is now " + players[i].squares.length + " blocks long");
 				}
-				
+			}
 				for each (var item:Block in players) 
 				{
 					for (var j:int = 0; j < item.squares.length; j++) 
 					{
-						//trace(item.squares);
-						if (players[i].square.hitTestObject(item.squares[j]))
+						if (intersectsTest(players[i].square,item.squares[j]))
 						{
 							if (players[i].square != item.squares[j])
 							{
